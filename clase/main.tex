@@ -1,0 +1,154 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\title{Probabilidad y Cadenas de Markov}
+\author{F. Galileo Cappella Lewi}
+\date[PC2 2023]{Programación Competitiva 2\\\today}
+
+% Configurando beamer
+\usetheme{Boadilla}
+\AtBeginSection[]{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+\newcommand{\SECTIONA}{Introducción a la probabilidad}
+\section{\SECTIONA}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+
+  La probabilidad es una forma de medir y pensar sobre la probabilidad de que pasen eventos. \pause Hay tres casos:
+  \begin{itemize}
+    \item Un evento imposible, con probabilidad 0
+    \item Un evento que sí o sí sucede, con probabilidad 1
+    \item Y un evento que capaz sucede, con probabilidad entre 0 y 1.
+  \end{itemize} \pause
+  La forma en la que definimos la probabilidad \(P\) de un \textbf{evento} \(E\) en un \textbf{espacio} \(S\) de posibilidades es la frecuencia con la que pasa. Es decir:
+  \begin{gather*}
+    0 \leq P(E) \leq 1 \\
+    P(E) = \dfrac{|\{s \in S \text{ tal que ocurre } E \text{ en } s\}|}{|S|}
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Ejemplos de probabilidades}
+
+  Por ejemplo, tirando un dado de seis caras el resultado es un entero entre 1 y 6, el espacio \(S = \{1, 2, 3, 4, 5, 6\}\). \pause Así tenemos que entonces al tirar un dado:
+  \begin{itemize}
+    \item<2-> \(P(\text{''sale un 4''}) = \dfrac{|\{4\}|}{|\{1, 2, 3, 4, 5, 6\}|} = \dfrac{1}{6}\). Similar para cualquiera de las seis caras.
+    \item<3-> \(P(\text{''no sale un 6''}) = \dfrac{|\{1, 2, 3, 4, 5\}|}{|\{1, 2, 3, 4, 5, 6\}|} = \dfrac{5}{6}\). Similar para cualquiera de las seis caras.
+    \item<4-> \(P(\text{''sale par''}) = \dfrac{|\{2, 4, 6\}|}{|\{1, 2, 3, 4, 5, 6\}|} = \dfrac{3}{6} = \dfrac{1}{2}\). Similar para que salga impar.
+  \end{itemize}
+\end{frame}
+
+\subsection{Calculando probabilidades}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Calculando probabilidades}
+
+  Para calcular la probabilidad de un evento podemos o usar combinatoria o simular el proceso que genera al evento. \pause \\
+  Como ejemplo vamos a calcular la probabilidad de sacar tres cartas del mismo valor de un mazo de 48 cartas bien mezclado.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Calculando probabilidades usando combinatoria}
+
+  Este es el mismo método que vimos para los dados. \pause \\
+  Hay \(\binom{48}{3}\) formas de agarrar tres cartas cualquieras del mazo. \pause \\
+  Y como hay \(12\) posibles valores para las cartas y \(\binom{4}{3}\) formas de agarrar 3 palos de los cuatro palos posibles. Queda que hay \(12\binom{4}{3}\) casos en los que se cumple lo pedido. \pause \\
+  Por lo que la probabilidad del evento es:
+  \begin{gather*}
+    \dfrac{12\binom{4}{3}}{\binom{48}{3}} = \dfrac{12 \cdot 4}{17296} = \dfrac{48}{17296} = \dfrac{3}{1081} \approx 0.0028 = 0.28\%
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Calculando probabilidades simulando el evento}
+
+  En este método simulamos el proceso que genera al evento. \pause Que en este caso consiste de tres pasos en los que levantamos una carta en cada uno. Donde queremos que cada paso mantenga el evento deseado. \pause \\
+  Agarrando la primera carta no importa cual salga, porque no hay ninguna restricción. \pause \\
+  Agarrando la segunda de las 47 cartas restantes sólo nos sirven 3, por lo que hay \(\frac{3}{47}\) chances de que siga el evento. \pause \\
+  Y agarrando la tercera carta, similarmente, quedan 46 cartas y sólo nos sirven 2, por lo que hay \(\frac{2}{46}\) chances. \pause \\ Por lo que la probabilidad del evento es:
+  \begin{gather*}
+    1 \cdot \dfrac{3}{47} \cdot \dfrac{2}{46} = \dfrac{3}{1081} \approx 0.0028 = 0.28\%
+  \end{gather*}
+\end{frame}
+
+\subsection{Operaciones entre probabilidades}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Operaciones entre probabilidades}
+
+  Hay tres operaciones principales para las probabilidades:
+  \begin{itemize}
+    \item<2-> El \textbf{complemento} de un evento \(\bar{E}\), que son los casos en los que no pasa el evento \(E\): \(P(\bar{E}) = 1 - P(E)\).
+    \item<3-> La \textbf{intersección} de dos eventos, que son los casos en los que pasan ambos a la vez: \(P(E_{1} \cap E_{2})\), la ecuación la vemos en un par de slides.
+    \item<4-> Y la \textbf{unión} de dos eventos, que son los casos en los que pasa uno o el otro (o ambos): \(P(E_{1} \cup E_{2}) = P(E_{1}) + P(E_{2}) - P(E_{1} \cap E_{2})\). \pause \\
+      Restamos los casos en los que pasan ambos, ya que los estaríamos contando dos veces al sumarlos.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Probabilidad condicional}
+
+  La \textbf{probabilidad condicional} de un evento \(A\) dado otro evento \(B\) es:
+  \begin{gather*}
+    P(A | B) = \dfrac{P(A \cap B)}{P(B)}
+  \end{gather*}
+  Esta es la probabilidad de que pasen \(A\) y \(B\) dado que pasa \(B\). \pause \\
+  Con esto se puede derivar la probabilidad de la intersección de dos eventos como:
+  \begin{gather*}
+    P(A \cap B) = P(A | B) \cdot P(B)
+  \end{gather*} \pause
+  Y cuando sucede que \(P(A|B) = P(A)\) y \(P(B|A) = P(B)\) se los define como eventos \textbf{independientes} entre sí, y se tiene que:
+  \begin{gather*}
+    P(A \cap B) = P(A) \cdot P(B)
+  \end{gather*}
+\end{frame}
+
+\section{Ejemplos Beamer}
+
+\subsection{Highlights}
+
+\begin{frame}
+  \frametitle{Sample frame title}
+
+  In this slide, some important text will be
+  \alert{highlighted} because it's important.
+  Please, don't abuse it.
+
+  \begin{block}{Remark}
+  Sample text
+  \end{block}
+
+  \begin{alertblock}{Important theorem}
+  Sample text in red box
+  \end{alertblock}
+
+  \begin{examples}
+  Sample text in green box. The title of the block is ``Examples".
+  \end{examples}
+\end{frame}
+
+
+\end{document}
