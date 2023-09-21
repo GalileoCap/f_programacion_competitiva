@@ -16,6 +16,14 @@
   \end{frame}
 }
 
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=magenta,      
+  urlcolor=cyan,
+}
+
 \begin{document}
 
 \frame{\titlepage}
@@ -33,10 +41,10 @@
 
   La probabilidad es una forma de medir y pensar sobre la probabilidad de que pasen eventos. \pause Hay tres casos:
   \begin{itemize}
-    \item Un evento imposible, con probabilidad 0
-    \item Un evento que sí o sí sucede, con probabilidad 1
-    \item Y un evento que capaz sucede, con probabilidad entre 0 y 1.
-  \end{itemize} \pause
+    \item<2-> Un evento imposible, con probabilidad 0
+    \item<3-> Un evento que sí o sí sucede, con probabilidad 1
+    \item<4-> Y un evento que capaz sucede, con probabilidad entre 0 y 1.
+  \end{itemize} \pause \pause \pause % TODO: Sacar este hack, sino me aparece lo de abajo antes que el <4->
   La forma en la que definimos la probabilidad \(P\) de un \textbf{evento} \(E\) en un \textbf{espacio} \(S\) de posibilidades es la frecuencia con la que pasa. Es decir:
   \begin{gather*}
     0 \leq P(E) \leq 1 \\
@@ -124,6 +132,185 @@
   \begin{gather*}
     P(A \cap B) = P(A) \cdot P(B)
   \end{gather*}
+\end{frame}
+
+\subsection{Variables aleatorias}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Variables aleatorias}
+
+  Una \textbf{variable aleatoria (VA)} es un valor generado por un proceso aleatorio. Por ejemplo, si tiramos dos dados, la suma de sus valores es una VA. \\
+  Para una VA \(X\) y un valor \(x\) de ella, podemos definir \(P(X = x)\) como la probabilidad del evento en el que \(X\) vale \(x\). \pause \\
+
+  Sobre la VA \(X\), definimos la \textbf{esperanza} \(E(X)\) como el valor que tiene en promedio. Y se calcula:
+  \begin{gather*}
+    E(X) = \sum_{x}x \cdot P(X = x)
+  \end{gather*}
+  para \(x\) recorriendo todos los valores posibles de \(X\). \pause \\
+  Por ejemplo, al tirar un dado:
+  \begin{gather*}
+    E(X) = 1 \cdot \dfrac{1}{6} + 2 \cdot \dfrac{1}{6} + 3 \cdot \dfrac{1}{6} + 4 \cdot \dfrac{1}{6} + 5 \cdot \dfrac{1}{6} + 6 \cdot \dfrac{1}{6} = \dfrac{7}{2}
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Linealidad de la esperanza}
+
+  Una propiedad útil de la esperanza es su \textbf{linealidad}. Es decir:
+  \begin{gather*}
+    E(X_{1} + X_{2} + \ldots + X_{k}) = E(X_{1}) + E(X_{2}) + \ldots + E(X_{k})
+  \end{gather*} \pause
+
+  Por ejemplo al tirar dos dados, si definimos a \(X_{1}\) como el valor del primer dado, y \(X_{2}\) como el del segundo, podemos calcular la esperanza de la suma usando la linealidad:
+  \begin{gather*}
+    E(X_{1} + X_{2}) = E(X_{1}) + E(X_{2}) = \dfrac{7}{2} + \frac{7}{2} = 7
+  \end{gather*} \pause
+
+  No hace falta que las VA sean independientes. Esto vale SIEMPRE.
+\end{frame}
+
+\subsection{Distribuciones}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones}
+
+  Una \textbf{distribución} es una forma de describir una VA. Nos permite saber para cada \(x\) cuánto vale \(P(X = x)\). Las distribuciones se pueden dar con una tabla, que para cada valor muestre la probabilidad, o con una fórmula que permite calcularla en cada valor de \(x\). \pause \\
+  Hay varias distribuciones ya conocidas, nos son relevantes cuatro.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones: Bernoulli y Binomial}
+
+  \begin{itemize}
+    \item VA de \textbf{Bernoulli}: Vale 0 ó 1, con probabilidad \(p\) de valer 1. \\
+      Ej: Tirar una moneda y considerar cara como 0 y ceca como 1.
+      \begin{gather*}
+        P(X = 1) = p \\
+        P(X = 0) = 1 - p \\
+        E(X) = p
+      \end{gather*}
+    \item<2-> VA \textbf{binomial}: Es la suma de \(n\) Bernoullis. \\
+      Ej: Tirar una moneda \(n\) veces y sumar sus resultados.
+      \begin{gather*}
+        P(X = x) = \binom{n}{x} \cdot p^{x} \cdot (1 - p)^{n - x} \\
+        E(X) = np
+      \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones: Geométrica y Uniforme}
+
+  \begin{itemize}
+    \item VA \textbf{geométrica}: En un proceso que evalúa Bernoullis de probabilidad \(p\), representa la cantidad de intentos hasta el primer éxito. \\
+      Ej: Tirar una moneda hasta que salga un 1 (ceca).
+      \begin{gather*}
+        P(X = x) = (1 - p)^{x - 1} \cdot p \\
+        E(X) = \dfrac{1}{p}
+      \end{gather*}
+    \item<2-> VA \textbf{uniforme}: Esta la usamos seguido en programación. La VA puede valer un entero cualquiera en el rango \([a, b]\) con misma probabilidad. \\
+      Ej: Tirar una moneda \(n\) veces y sumar sus resultados.
+      \begin{gather*}
+        P(X = x) = \begin{cases} \dfrac{1}{b - a} & \text{if } a \leq x \leq b \\ 0 & \text{otherwise} \\ \end{cases} \\
+        E(X) = \dfrac{a + b}{2}
+      \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\newcommand{\SECTIONB}{Problemas de Probabilidad}
+\section{\SECTIONB}
+
+\subsection{CSES 1725 - Dice Probability}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\href{https://cses.fi/problemset/task/1725/}{CSES 1725 - Dice Probability}}
+
+  Tirando un dado de seis caras \(n\) veces. ¿Cual es la probabilidad de que la suma de los resultados esté entre \(a\) y \(b\)? \pause \\
+  Primero nombramos a la VA \(S_{n}\) como la suma de las \(n\) tiradas. Entonces queremos calcular \(P(a \leq S_{n} \leq b)\). \pause \\
+  Esto es lo mismo que \(P(S_{n} = a) + P(S_{n} = a+1) + \ldots + P(S_{n} = b)\). \pause \\
+  Ahora \(n = 1\) es fácil, ya que \(S_{1}\) es lo mismo que el resultado de tirar un sólo dado. \\
+  ¿Cómo hacemos para \(n > 1\)?
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\href{https://cses.fi/problemset/task/1725/}{CSES 1725 - Dice Probability} para \(n > 1\)}
+
+  Tomamos \(X_{j}\) al resultado de la \(j\)-ésima tirada. \\
+  Al tirar el \(j\)-ésimo dado ya tenemos la suma parcial \(S_{j} = X_{1} + X_{2} + \ldots + X_{j}\). \pause \\
+  Esto nos permite calcular la probabilidad de los valores de la \((j+1)\)-ésima tirada como:
+  {\small
+  \begin{align*}
+    P(S_{j+1} = x) &= P(X_{j+1} = 1 | S_{j} = x - 1) + P(X_{j+1} = 2 | S_{j} = x - 2) + \ldots \\
+                  & + P(X_{j+1} = 6 | S_{j} = x - 6)  \\
+                  &= \sum_{i = 1}^{6}P(X_{j+1} = i | S_{j} = x - i) \\
+                  &= \sum_{i = 1}^{6}P(X_{j+1} = i) \cdot P(S_{j} = x - i) \\
+                  &= \sum_{i = 1}^{6}\frac{1}{6} \cdot P(S_{j} = x - i) = \frac{1}{6}\sum_{i = 1}^{6}P(S_{j} = x - i) \\
+  \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\href{https://cses.fi/problemset/task/1725/}{CSES 1725 - Dice Probability} para \(n > 1\)}
+
+  Quedándonos con:
+  \begin{gather*}
+    P(S_{j+1} = x) = \frac{1}{6}\sum_{i = 1}^{6}P(S_{j} = x - i)
+  \end{gather*}
+  Y resaltando que \(j \leq S_{j} \leq 6j\). \\
+  Podemos entonces calcular \(P(S_{n} = x)\) recursivamente llamando a la siguiente función con \(f(n, x)\):
+  \begin{gather*}
+    f(j, x) = \begin{cases}
+      0 & \text{if } \neg(j \leq x \leq 6j) \\
+      \frac{1}{6} & \text{if } j = 1 \\
+      \frac{1}{6}\sum_{i = 1}^{6}f(j-1, x-i) & \text{otherwise} \\
+    \end{cases}
+  \end{gather*} \pause
+  Ver código.
+\end{frame}
+
+\newcommand{\SECTIONC}{Cadenas de Markov}
+\section{\SECTIONC}
+
+\begin{frame}
+  \frametitle{\SECTIONC}
+  \framesubtitle{}
+
+  TODO: Gambler's Ruin -> Ergodicity -> Problema resoluble con Markov -> Markov
+\end{frame}
+
+\newcommand{\SECTIOND}{Problemas de Markov}
+\section{\SECTIOND}
+
+\begin{frame}
+  \frametitle{\SECTIOND}
+  \framesubtitle{}
+
+  TODO: Problemas de Markov
+\end{frame}
+
+% TODO: ¿Optimizaciones para Markov?
+
+\section{Notas finales}
+
+\begin{frame}
+  \frametitle{Bibliografía y referencias}
+  
+  \begin{itemize}
+  \item \textbf{Training Camp 2023}, clase por Caro Lang \\
+  \item \textbf{Competitive Programmer's Handbook}, Antti Laaksonen de CSES \\
+      \href{https://cses.fi/book/book.pdf}{https://cses.fi/book/book.pdf}
+    \item \textbf{The Probability Distribution of the Sum of Several Dice: Slot Applications}, Ashok K. Singh, Rohan J. Dalpatadu, Anthony F. Lucas \\
+      \href{https://digitalscholarship.unlv.edu/cgi/viewcontent.cgi?article=1025&context=grrj}{https://digitalscholarship.unlv.edu/cgi/viewcontent.cgi?article=1025\&context=grrj}
+  \end{itemize}
 \end{frame}
 
 \section{Ejemplos Beamer}
