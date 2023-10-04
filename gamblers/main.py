@@ -16,10 +16,12 @@ def simulatePlayer(throws):
 def simulate(numberOfPlayers, throws):
   return [simulatePlayer(throws) for _ in range(numberOfPlayers)]
 
-def scatter(data, color):
+def scatter(data, color, name = '', showlegend = True):
   return go.Scatter(
     x = np.arange(len(data)),
     y = data,
+    name = name,
+    showlegend = showlegend,
     line = {'color': color}
   )
 
@@ -34,6 +36,7 @@ def plotMean(mean):
   fig.update_layout(
     xaxis_title = 'Tirada',
     yaxis_title = 'Riqueza Promedio ($)',
+    showlegend = False,
   )
 
   writeImage(fig, 'mean')
@@ -58,10 +61,10 @@ def plotPaths(data, n):
 
 def plotLogPaths(data, mean, median, n):
   fig = go.Figure()
-  for path in data[:n]:
-    fig.add_trace(scatter(path, 'pink'))
-  fig.add_trace(scatter(mean, 'blue'))
-  fig.add_trace(scatter(median, 'red'))
+  for i in range(n):
+    fig.add_trace(scatter(data[i], 'pink', 'Riqueza Individual', i == 0))
+  fig.add_trace(scatter(mean, 'blue', 'Riqueza Promedio'))
+  fig.add_trace(scatter(median, 'red', 'Riqueza Mediana'))
 
   fig.add_hline( # Horizontal line at breaking even
     y = data[0][0],
@@ -71,7 +74,7 @@ def plotLogPaths(data, mean, median, n):
   fig.update_layout(
     xaxis_title = 'Tirada',
     yaxis_title = 'Riqueza (log, $)',
-    showlegend = False,
+    showlegend = True,
   )
   fig.update_yaxes(type = 'log')
 
