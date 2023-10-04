@@ -1,6 +1,7 @@
 import numpy as np
 import plotly.graph_objects as go
 from random import randint
+import time
 
 def simulateThrow(currentCash):
   side = randint(0, 1) # 0: Heads, 1: Tails
@@ -22,6 +23,11 @@ def scatter(data, color):
     line = {'color': color}
   )
 
+def writeImage(fig, name):
+  fig.write_image(f'{name}.pdf')
+  time.sleep(1)
+  fig.write_image(f'{name}.pdf') # NOTE: Fixes "Loading [MathJax]/extensions/MathMenu.js" showing in other pdf plots
+
 def plotMean(mean):
   fig = go.Figure(scatter(mean, 'blue'))
 
@@ -30,7 +36,7 @@ def plotMean(mean):
     yaxis_title = 'Riqueza Promedio ($)',
   )
 
-  fig.write_image('mean.png')
+  writeImage(fig, 'mean')
 
 def plotPaths(data, n):
   fig = go.Figure()
@@ -48,7 +54,7 @@ def plotPaths(data, n):
     showlegend = False,
   )
 
-  fig.write_image('paths.png')
+  writeImage(fig, 'paths')
 
 def plotLogPaths(data, mean, median, n):
   fig = go.Figure()
@@ -69,7 +75,7 @@ def plotLogPaths(data, mean, median, n):
   )
   fig.update_yaxes(type = 'log')
 
-  fig.write_image('logPaths.png')
+  writeImage(fig, 'logPaths')
 
 def plot(numberOfPlayers, throws):
   data = simulate(numberOfPlayers, throws)
