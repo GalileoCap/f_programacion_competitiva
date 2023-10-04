@@ -29,22 +29,6 @@ def genMatrix(sz):
 
   return mat
 
-def printRow(row):
-  print('  {', end = '')
-  for i in range(len(row)-1):
-    print(row[i], ', ', end = '')
-  print(row[-1], end = '')
-  print('}', end = '')
-
-def printMatrix(mat):
-  print('{')
-  for i in range(len(mat)-1):
-    printRow(mat[i])
-    print(',')
-  printRow(mat[-1])
-  print('')
-  print('}')
-
 def matrixAfter(k, sz = 8):
   return np.linalg.matrix_power(genMatrix(sz), k)
 
@@ -84,11 +68,6 @@ def test():
   except EOFError:
     return
 
-def cheat():
-  res = [solve(k, 8) for k in range(100 + 1)]
-  printRow(res)
-
-# printMatrix(genMatrix(8))
-# cses()
-# test()
-cheat()
+if __name__ == '__main__':
+  cses()
+  # test()
