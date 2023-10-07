@@ -17,14 +17,14 @@ def genMatrix(sz):
   for i, (y, x) in enumerate(itt.product(range(sz), range(sz))):
     amnt = getAmnt(x, y)
 
-    if x != 0:
+    if x-1 >= 0:
       mat[colPos(x-1, y, sz), i] = amnt
-    if x != sz-1:
+    if x+1 < sz:
       mat[colPos(x+1, y, sz), i] = amnt
 
-    if y != 0:
+    if y-1 >= 0:
       mat[colPos(x, y-1, sz), i] = amnt
-    if y != sz-1:
+    if y+1 < sz-1:
       mat[colPos(x, y+1, sz), i] = amnt
 
   return mat
@@ -34,12 +34,12 @@ def matrixAfter(k, sz = 8):
 
 def simulate(k, i, sz = 8):
   mat = matrixAfter(k, sz)
-  startingArr = np.zeros(sz**2)
-  startingArr[i] = 1
-  return mat @ startingArr
+  v0 = np.zeros(sz**2)
+  v0[i] = 1
+  return mat @ v0
 
 def solve(k, sz = 8):
-  odds = [simulate(k, i, sz) for i in range(sz**2)]
+  odds = [simulate(k, r, sz) for r in range(sz**2)]
 
   res = 0
   for (y, x) in itt.product(range(sz), range(sz)):

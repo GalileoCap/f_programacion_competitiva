@@ -14,8 +14,18 @@
 \date[PC2 2023]{Programación Competitiva 2\\\today}
 
 \newcommand{\tab}{\phantom{mm}}
+
+\setchessboard{maxfield=c3, showmover=false, vlabel=false, hlabel=false}
 \newcommand{\chess}[1]{\chessboard[addpieces={R#1}]}
 \newcommand{\tchess}[1]{\chessboard[tinyboard, addpieces={R#1}]}
+
+\newcommand{\GVertex}[4]{\Vertex[L=#1,x=#2,y=#3]{#4}}
+\newcommand{\CVertex}[4]{\GVertex{\tchess{#1}}{#2}{#3}{#4}}
+\newcommand{\TVertex}[5]{\GVertex{{$\langle #1, #2 \rangle$}}{#3}{#4}{#5}}
+
+\newcommand{\GEdge}[3]{\Edge[label=#1](#2)(#3)}
+\newcommand{\GBEdge}[3]{\Edge[style={bend left=30},label=#1](#2)(#3)}
+\tikzset{EdgeStyle/.style = {->}}
 
 % Configurando beamer
 \usetheme{Boadilla}
@@ -150,7 +160,7 @@
   \frametitle{\SECTIONA}
   \framesubtitle{Variables aleatorias}
 
-  Una \textbf{variable aleatoria (VA)} es un valor generado por un proceso aleatorio. Por ejemplo, si tiramos dos dados, la suma de sus valores es una VA. \\
+  Una \textbf{variable aleatoria (VA)} es un valor generado por un proceso aleatorio. Por ejemplo, si tiramos dos dados, la suma de sus valores es una VA. \pause \\
   Para una VA \(X\) y un valor \(x\) de ella, podemos definir \(P(X = x)\) como la probabilidad del evento en el que \(X\) vale \(x\). \pause \\
 
   Sobre la VA \(X\), definimos la \textbf{esperanza} \(E(X)\) como el valor que tiene en promedio. Y se calcula:
@@ -224,7 +234,7 @@
         E(X) = \dfrac{1}{p}
       \end{gather*}
     \item<2-> VA \textbf{uniforme}: Esta la usamos seguido en programación. La VA puede valer un entero cualquiera en el rango \([a, b]\) con misma probabilidad. \\
-      Ej: Tirar una moneda \(n\) veces y sumar sus resultados.
+      Ej: Sacar un número de bingo (sólo la primera vez).
       \begin{gather*}
         P(X = x) = \begin{cases} \dfrac{1}{b - a} & \text{if } a \leq x \leq b \\ 0 & \text{otherwise} \\ \end{cases} \\
         E(X) = \dfrac{a + b}{2}
@@ -244,7 +254,11 @@
 
   Tirando un dado de seis caras \(n\) veces. ¿Cual es la probabilidad de que la suma de los resultados esté entre \(a\) y \(b\)? \pause \\
   Primero nombramos a la VA \(S_{n}\) como la suma de las \(n\) tiradas. Entonces queremos calcular \(P(a \leq S_{n} \leq b)\). \pause \\
-  Esto es lo mismo que \(P(S_{n} = a) + P(S_{n} = a+1) + \ldots + P(S_{n} = b)\). \pause \\
+  Esto es lo mismo que:
+  \begin{align*}
+    P(a \leq S_{n} \leq b) &= P(S_{n} = a \cup S_{n} = a+1 \cup \ldots \cup S_{n} = b) \\
+                           &= P(S_{n} = a) + P(S_{n} = a+1) + \ldots + P(S_{n} = b)
+  \end{align*} \pause
   Ahora \(n = 1\) es fácil, ya que \(S_{1}\) es lo mismo que el resultado de tirar un sólo dado. \\
   ¿Cómo hacemos para \(n > 1\)?
 
@@ -252,7 +266,7 @@
 
 \begin{frame}
   \frametitle{\SECTIONB}
-  \framesubtitle{\EJA para \(n > 1\)}
+  \framesubtitle{\EJA\ para \(n > 1\)}
 
   Tomamos \(X_{j}\) al resultado de la \(j\)-ésima tirada. \\
   Al tirar el \(j\)-ésimo dado ya tenemos la suma parcial \(S_{j} = X_{1} + X_{2} + \ldots + X_{j}\). \pause \\
@@ -270,7 +284,7 @@
 
 \begin{frame}
   \frametitle{\SECTIONB}
-  \framesubtitle{\EJA para \(n > 1\)}
+  \framesubtitle{\EJA\ para \(n > 1\)}
 
   Quedándonos con:
   \begin{gather*}
@@ -288,6 +302,7 @@
   Ver código.
 \end{frame}
 
+\subsection{TAP 2018 E, Estacionamiento}
 \newcommand{\EJB}{\href{https://codeforces.com/group/YjFmW2O15Q/contest/101919}{TAP 2018 E, Estacionamiento}}
 
 \begin{frame}
@@ -303,7 +318,8 @@
   \framesubtitle{\EJB}
 
   En cada posición queremos decidir si movernos hacia la izquierda o hacia la derecha. \pause Y obviamente queremos tomar la dirección que nos de la cantidad mínima esperada de cuadras que caminaríamos. \pause \\
-  Esto es el mismo problema que tenemos ahora mismo pero con un poco más de información (la de ya haber caminado por donde nos movamos). Por lo que es claro que se resuelve con recursión.
+  Esto es el mismo problema que tenemos ahora mismo pero con un poco más de información (la de ya haber caminado por donde nos movamos). \pause \\
+  Por lo que es claro que se resuelve con recursión.
 \end{frame}
 
 \begin{frame}
@@ -339,6 +355,7 @@
 
 \newcommand{\SECTIONC}{Cadenas de Markov}
 \section{\SECTIONC}
+\subsection{Gambler's Ruin}
 
 \begin{frame}
   \frametitle{\SECTIONC}
@@ -403,8 +420,6 @@
   Ver un problema así nos resalta que la probabilidad no es tan directa como la solemos pensar. No es suficiente con quedarse con el cálculo de la ganancia promedio.
 \end{frame}
 
-\setchessboard{maxfield=c3, showmover=false, vlabel=false, hlabel=false}
-
 \begin{frame}
   \frametitle{\SECTIONC}
   \framesubtitle{Ahora sí: Markov}
@@ -414,21 +429,14 @@
 
 \end{frame}
 
-\newcommand{\GVertex}[4]{\Vertex[L=#1,x=#2,y=#3]{#4}}
-\newcommand{\CVertex}[4]{\GVertex{\tchess{#1}}{#2}{#3}{#4}}
-\newcommand{\TVertex}[5]{\GVertex{{$\langle #1, #2 \rangle$}}{#3}{#4}{#5}}
-
-\newcommand{\GEdge}[3]{\Edge[label=#1](#2)(#3)}
-\newcommand{\GBEdge}[3]{\Edge[style={bend left=30},label=#1](#2)(#3)}
-\tikzset{EdgeStyle/.style = {->}}
-
+\subsection{Modelando con Markov}
 \newcommand{\EJC}{Un robot a través del espejo}
 
 \begin{frame}
   \frametitle{\SECTIONC}
   \framesubtitle{\EJC}
 
-  Vamos a modelar a un robot que se mueve sobre un tablero como de ajedrez. \pause En específico va a empezar en la posición \(\langle 1, 1 \rangle\) en un tablero de \(3 \times 3\). En cada paso elije al azar a dónde se mueve entre los casilleros que tenga al lado. Se busca saber la probabilidad de que esté en algún casillero específico después de \(k\) pasos.
+  Vamos a modelar a un robot que se mueve sobre un tablero como de ajedrez. \pause En específico va a empezar en la posición \(\langle 0, 0 \rangle\) en un tablero de \(3 \times 3\). En cada paso elije al azar a dónde se mueve entre los casilleros que tenga al lado. Se busca saber la probabilidad de que esté en algún casillero específico después de \(k\) pasos.
 
   \begin{figure}[H]
     \centering
@@ -580,17 +588,17 @@
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}
-      \TVertex{1}{1}{0}{0}{0}
-      \TVertex{2}{1}{2}{0}{1}
-      \TVertex{3}{1}{4}{0}{2}
+      \TVertex{0}{0}{0}{0}{0}
+      \TVertex{1}{0}{2}{0}{1}
+      \TVertex{2}{0}{4}{0}{2}
 
-      \TVertex{1}{2}{0}{2}{3}
-      \TVertex{2}{2}{2}{2}{4}
-      \TVertex{3}{2}{4}{2}{5}
+      \TVertex{0}{1}{0}{2}{3}
+      \TVertex{1}{1}{2}{2}{4}
+      \TVertex{2}{1}{4}{2}{5}
 
-      \TVertex{1}{3}{0}{4}{6}
-      \TVertex{2}{3}{2}{4}{7}
-      \TVertex{3}{3}{4}{4}{8}
+      \TVertex{0}{2}{0}{4}{6}
+      \TVertex{1}{2}{2}{4}{7}
+      \TVertex{2}{2}{4}{4}{8}
 
       \GBEdge{$\frac{1}{2}$}{0}{1}
       \GBEdge{$\frac{1}{2}$}{0}{3}
@@ -645,8 +653,8 @@
         0 & 0 & 0 & 0 & 0 & \frac{1}{3} & 0 & \frac{1}{3} & 0
     \end{pmatrix}}^{\text{Matriz de transición}}
     \overbrace{\begin{pmatrix}
-      0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 
-    \end{pmatrix}}^{\text{Este estado (\(\langle 1, 1 \rangle\))}}
+      1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 
+    \end{pmatrix}}^{\text{Este estado (\(\langle 0, 0 \rangle\))}}
   \end{gather*}
 \end{frame}
 
@@ -667,11 +675,11 @@
         0 & 0 & 0 & 0 & 0 & \frac{1}{3} & 0 & \frac{1}{3} & 0
     \end{pmatrix}}^{\text{Matriz de transición}}
     \overbrace{\begin{pmatrix}
-      0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 
-    \end{pmatrix}}^{\text{Este estado (\(\langle 1, 1 \rangle\))}}
+      1 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 
+    \end{pmatrix}}^{\text{Este estado (\(\langle 0, 0 \rangle\))}}
     =
     \overbrace{\begin{pmatrix}
-      0 \\ 0 \\ 0 \\ 0 \\ 0 \\ \frac{1}{2} \\ 0 \\ \frac{1}{2} \\ 0 
+      0 \\ \frac{1}{2} \\ 0 \\ \frac{1}{2} \\ 0 \\ 0 \\ 0 \\ 0 \\ 0 
     \end{pmatrix}}^{\text{Siguiente estado}}
   \end{gather*}
 \end{frame}
@@ -685,7 +693,7 @@
   \end{gather*} \pause
   Por lo que el resultado a lo pedido es
   \begin{gather*}
-    P(\text{Esté en la posición } \langle r, c \rangle \text{ en el \(k\)-ésimo } k \text{ paso}) = (M^{k}v_{0})_{3r + c} = (v_{k})_{3r + c}
+    P(\text{Esté en la posición } \langle r, c \rangle \text{ en el \(k\)-ésimo paso}) = (M^{k}v_{0})_{3r + c} = (v_{k})_{3r + c}
   \end{gather*}
 \end{frame}
 
@@ -693,7 +701,9 @@
 
 \newcommand{\SECTIOND}{Problemas de Markov}
 \section{\SECTIOND}
+
 \newcommand{\EJD}{\href{https://cses.fi/problemset/view/1726/}{CSES 1726 - Moving Robots}}
+\subsection{CSES 1726 - Moving Robots}
 
 \begin{frame}
   \frametitle{\SECTIOND}
@@ -709,11 +719,11 @@
   \framesubtitle{\EJD, para cada casillero}
 
   Primero vamos a querer simular a cada robot, para calcular su distribución después de \(k\) pasos. \pause Esto es simple: Calculamos la matriz de transición, la elevamos a \(k\), y luego la multiplicamos por cada vector inicial. \pause \\
-  Una vez que tenemos las distribuciones para cada robot, podemos calcular la probabilidad de que no haya ningún robot en un casillero como el producto de el inverso de las probabilidades de todos los robots. \pause
+  Una vez que tenemos las distribuciones para cada robot, podemos calcular la probabilidad de que no haya ningún robot en un casillero como el producto del complemento de las probabilidades de todos los robots. \pause
   \begin{align*}
     P(\text{No haya ningún en } \langle r, c \rangle) &= \bigcap_{0 \leq i < 64} P(\text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
                                                       &= \prod_{0 \leq i < 64}P(\text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
-                                                      &= \prod_{0 \leq i < 64}(1 - P(\text{El robot } i \text{ esté en } \langle r, c \rangle)) \\
+                                                      &= \prod_{0 \leq i < 64}(1 - P(\text{El robot } i \text{ sí esté en } \langle r, c \rangle)) \\
                                                       &= \prod_{0 \leq i < 64}(1 - (M^{k}v_{i,0})_{8r + c}) \\
   \end{align*}
 \end{frame}
