@@ -26,7 +26,20 @@
 
 \newcommand{\GEdge}[3]{\Edge[label=#1](#2)(#3)}
 \newcommand{\GBEdge}[3]{\Edge[style={bend left=30},label=#1](#2)(#3)}
+\newcommand{\GLoop}[3]{\Loop[dist=2cm,dir=#3,label=#1](#2)}
 \tikzset{EdgeStyle/.style = {->}}
+
+\newcommand{\GTuple}[2]{\ensuremath{\langle #1, #2 \rangle}}
+\newcommand{\Grrcc}{\GTuple{r^{+}}{c^{+}}}
+\newcommand{\Grrcm}{\GTuple{r^{+}}{c^{-}}}
+\newcommand{\Grmcc}{\GTuple{r^{-}}{c^{+}}}
+\newcommand{\Grmcm}{\GTuple{r^{-}}{c^{-}}}
+
+\newcommand{\GBETA}{\ensuremath{\frac{n-1}{2n^{2}}}}
+\newcommand{\GALPHA}{\ensuremath{1 - 2 \cdot \GBETA}}
+\newcommand{\GGAMMA}{\ensuremath{\frac{1}{2n^{2}}}}
+\newcommand{\GDELTA}{\ensuremath{1 - (\GGAMMA + \GBETA)}}
+\newcommand{\GEPSILON}{\ensuremath{1 - 2 \cdot \GGAMMA}}
 
 % Configurando beamer
 \usetheme{Boadilla}
