@@ -28,9 +28,9 @@ def genMatrix(sz):
   # epsilon = 1/2 * (1/sz * (sz-1)/sz + (sz-1)/sz) + 1/2 * (1/sz * (sz-1)/sz + (sz-1)/sz) # r-, c- -> r-, c- = (elije rotar fila y ((elije rotar esta fila y no le pega al lugar correcto) o elije rotar tora fila)) o (elije rotar columna y ((elije rotar esta columna y no le pega al lugar correcto) o elije rotar otra columna))
 
   mat = np.zeros((4, 4), dtype = np.int64)
-  beta = (sz-1) * inverseMod(2 * sz**2) # r+, c+ -> r+, c- = elije rotar fila y elije rotar esta fila y no le pega al lugar correcto [Similar para r+, c+ -> r-, c+ y r+, c- -> r-, c- y r-, c+ -> r-, c-]
+  beta = (sz-1) * inverseMod(2 * sz**2) % MOD # r+, c+ -> r+, c- = elije rotar fila y elije rotar esta fila y no le pega al lugar correcto [Similar para r+, c+ -> r-, c+ y r+, c- -> r-, c- y r-, c+ -> r-, c-]
   alpha = (1 - 2 * beta) % MOD
-  gamma = 1 * inverseMod(2 * sz**2) # r+, c- -> r+, c+ = elije rotar fila y elije rotar esta fila y le pega al lugar correct [Similar para r-, c+ -> r+, c+ y r-, c- -> r+, c- y r-, c- -> r-, c+]
+  gamma = inverseMod(2 * sz**2) # r+, c- -> r+, c+ = elije rotar fila y elije rotar esta fila y le pega al lugar correct [Similar para r-, c+ -> r+, c+ y r-, c- -> r+, c- y r-, c- -> r-, c+]
   delta = (1 - (gamma + beta)) % MOD
   epsilon = (1 - 2 * gamma) % MOD
 
