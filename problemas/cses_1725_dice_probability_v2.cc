@@ -1,3 +1,5 @@
+// 0.02s
+
 #include <ios>
 #include <iostream>
 #include <iomanip>
@@ -30,9 +32,6 @@ tfloat f(tint j, tint x) { // f(j, x) = P(S_j = x)
     Memory[thisCase] = res / 6.0;
   }
 
-#ifdef VERBOSE
-  std::cout << "f(" << j << ", " << x << ") = " << FIXED << Memory[thisCase] << std::endl;
-#endif
   return Memory[thisCase];
 }
 
@@ -43,10 +42,11 @@ tfloat p(tint n, tint a, tint b) {
   return res;
 }
 
-void submitRun(void) {
+int main(void) {
   // Optimizaciones genéricas
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
 
   // Recibo el input
   tint n, a, b;
@@ -57,24 +57,4 @@ void submitRun(void) {
 
   // Devuelvo el resultado
   std::cout << FIXED << res << std::endl;
-}
-
-void testRun(void) {
-  while (not std::cin.eof()) {
-    // Recibo el input
-    tint n, a, b;
-    tfloat expected;
-    std::cin >> n >> a >> b >> expected;
-
-    tfloat res = p(n, a, b);
-    std::cout << FIXED << n << " " << a << " " << b << " " << expected << " " << res << std::endl;
-  }
-}
-
-int main(void) {
-#ifndef TEST
-  submitRun();
-#else
-  testRun();
-#endif
 }

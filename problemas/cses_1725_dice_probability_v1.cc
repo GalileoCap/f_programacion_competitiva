@@ -1,3 +1,5 @@
+// Time Limit Exceded
+
 #include <ios>
 #include <iostream>
 #include <iomanip>
@@ -6,11 +8,11 @@ using tint = int;
 using tfloat = float;
 
 tfloat f(tint j, tint x) { // f(j, x) = P(S_j = x)
-  if (j == 1) { // Caso base, un sólo dado
-    if (1 <= x and x <= 6) // Sólo puede dar un resultado entre 1 y 6
-      return 1.0 / 6.0;
-    else return 0.0;
-  }
+  if (not (j <= x and x <= 6*j))
+    return 0;
+
+  if (j == 1) // Caso base, un sólo dado
+    return 1.0 / 6.0;
   
   tfloat res = 0.0; // f(j, x) = (f(j-1, x-1) + f(j-1), x-2 + ... + f(j-1, x-6))/6
   for (int i = 1; i <= 6; i++)
@@ -19,10 +21,11 @@ tfloat f(tint j, tint x) { // f(j, x) = P(S_j = x)
   return res / 6.0;
 }
 
-void submitRun(void) {
+int main(void) {
   // Optimizaciones genéricas
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
 
   // Recibo el input
   tint n, a, b;
@@ -35,17 +38,4 @@ void submitRun(void) {
 
   // Devuelvo el resultado
   std::cout << std::fixed << std::setprecision(6) << res << std::endl;
-}
-
-void testRun(void) {
-  while (not std::cin.eof())
-    submitRun();
-}
-
-int main(void) {
-#ifndef TEST
-  submitRun();
-#else
-  testRun();
-#endif
 }

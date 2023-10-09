@@ -1,3 +1,5 @@
+// 0.01s
+
 #include <ios>
 #include <iostream>
 #include <iomanip>
@@ -82,10 +84,11 @@ tfloat f() {
   return calcRes();
 }
 
-void submitRun(void) {
+int main(void) {
   // Optimizaciones genéricas
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
 
   // Recibo la cantidad de pasos a simular
   std::cin >> K;
@@ -95,29 +98,4 @@ void submitRun(void) {
 
   // Devuelvo el resultado
   std::cout << FIXED << res << std::endl;
-}
-
-void testRun(void) {
-  while (true) {
-    // Recibo la cantidad de pasos a simular
-    if (not (std::cin >> K))
-      break;
-
-    tfloat expected;
-    std::cin >> expected;
-    
-    // Calculo el resultado
-    tfloat res = f();
-
-    // Devuelvo el resultado
-    std::cout << FIXED << expected << " " << res << std::endl;
-  }
-}
-
-int main(void) {
-#ifndef TEST
-  submitRun();
-#else
-  testRun();
-#endif
 }

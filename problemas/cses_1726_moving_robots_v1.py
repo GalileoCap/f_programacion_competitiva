@@ -50,24 +50,7 @@ def solve(k, sz = 8):
 
   return res
 
-def cses():
+if __name__ == '__main__':
   k = int(input())
   res = solve(k, 8)
   print(f'{res:.6f}')
-  
-def test():
-  try:
-    while True:
-      k = int(input())
-      if k == -1:
-        break
-
-      expected = float(input())
-      res = solve(k)
-      print(f'{expected:.6f}, {res:.6f}')
-  except EOFError:
-    return
-
-if __name__ == '__main__':
-  cses()
-  # test()

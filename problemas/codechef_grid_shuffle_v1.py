@@ -1,14 +1,13 @@
-MOD = 998_244_353
+# 0.08s
 
-def inverseMod(x):
-  return pow(x, -1, MOD)
+MOD = 998_244_353
 
 def inputLine():
   n, k, r, c = [int(x) for x in input().split()]
   return n, k, r-1, c-1
 
-def colPos(x, y, sz):
-  return x + sz * y
+def inverseMod(x):
+  return pow(x, -1, MOD)
 
 def genMatrix(sz):
   beta = (sz-1) * inverseMod(2 * sz**2) % MOD # r+, c+ -> r+, c- = elije rotar fila y elije rotar esta fila y no le pega al lugar correcto [Similar para r+, c+ -> r-, c+ y r+, c- -> r-, c- y r-, c+ -> r-, c-]
@@ -34,7 +33,6 @@ def step(mat, v):
 
 def simulate(k, sz):
   mat = genMatrix(sz)
-  # print(mat)
   v = [1, 0, 0, 0]
 
   for _ in range(k):
@@ -46,18 +44,7 @@ def solve(k, r, c, sz):
   odds = simulate(k, sz)
   return odds[0] % MOD
 
-def codechef():
+if __name__ == '__main__':
   for _ in range(int(input())):
     n, k, r, c = inputLine()
     print(solve(k, r, c, n))
-  
-def test():
-  for _ in range(int(input())):
-    n, k, r, c = inputLine()
-    expected = int(input())
-    print(expected, solve(k, r, c, n))
-
-if __name__ == '__main__':
-  # np.set_printoptions(precision = 3)
-  # codechef()
-  test()

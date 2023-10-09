@@ -1,7 +1,12 @@
+// 0.01s
+
 #include <ios>
 #include <iostream>
 #include <iomanip>
 #include <vector>
+
+using tint = int;
+using tfloat = double;
 
 // Valores máximos dados por la consigna
 #define MAX_N 100
@@ -9,9 +14,6 @@
 
 // Precisión pedida por la consigna
 #define FIXED std::fixed << std::setprecision(6)
-
-using tint = int;
-using tfloat = double;
 
 std::vector<std::vector<tfloat>> Memory(MAX_N, std::vector<tfloat>(MAX_B, -1)); // Memoria usada para DP, tomo -1 como un valor no establecido
 
@@ -47,10 +49,11 @@ tfloat p(tint n, tint a, tint b) {
   return res;
 }
 
-void submitRun(void) {
+int main(void) {
   // Optimizaciones genéricas
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
+  std::cout.tie(nullptr);
 
   // Recibo el input
   tint n, a, b;
@@ -61,29 +64,4 @@ void submitRun(void) {
 
   // Devuelvo el resultado
   std::cout << FIXED << res << std::endl;
-}
-
-void testRun(void) {
-  while (not std::cin.eof()) {
-    // Vacío la memoria
-    for (int i = 0; i < MAX_N; i++)
-      for (int j = 0; j < MAX_B; j++)
-        Memory[i][j] = -1;
-
-    // Recibo el input
-    tint n, a, b;
-    tfloat expected;
-    std::cin >> n >> a >> b >> expected;
-
-    tfloat res = p(n, a, b);
-    std::cout << FIXED << n << " " << a << " " << b << " " << expected << " " << res << std::endl;
-  }
-}
-
-int main(void) {
-#ifndef TEST
-  submitRun();
-#else
-  testRun();
-#endif
 }

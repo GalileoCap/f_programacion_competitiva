@@ -1,3 +1,5 @@
+// 0.00s
+
 #include <ios>
 #include <iostream>
 #include <iomanip>
@@ -20,7 +22,6 @@ tint M[4][4];
 tint V[MAX_T][MAX_K+1][4] = {0};
 
 tint modulo(tint x) {
-  //return x % MOD;
   return (MOD + (x % MOD)) % MOD;
 }
 
@@ -79,11 +80,6 @@ int main(void) {
     // Recibo el input
     std::cin >> N >> K >> R >> C;
 
-#ifdef TEST
-    tint expected;
-    std::cin >> expected;
-#endif // TEST
-
     // Calculo su matriz de transición
     calcMatrix(N);
 
@@ -98,10 +94,6 @@ int main(void) {
     tint res = V[_r][K][0];
 
     // Devuelvo el resultado
-#ifdef TEST
-    std::cout << expected << ' ' << res << std::endl;
-#else
     std::cout << res << std::endl;
-#endif // TEST
   }
 }
