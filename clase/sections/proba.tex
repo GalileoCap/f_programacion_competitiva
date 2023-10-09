@@ -77,13 +77,13 @@
   En la probabilidad continua para cualquier valor particular \(x\) se tiene que \(P(X = x) = 0\), a pesar de que ese valor sea posible. \pause En cambio se habla de la probabilidad de que \(X\) pertenezca a un rango, o sea \(P(a \leq X \leq b)\).
 \end{frame}
 
-\subsection{Operaciones entre probabilidades}
+\subsection{Operaciones sobre eventos}
 
 \begin{frame}
   \frametitle{\SECTIONA}
-  \framesubtitle{Operaciones entre probabilidades}
+  \framesubtitle{Operaciones sobre eventos}
 
-  Hay tres operaciones principales para las probabilidades:
+  Como definimos los eventos como conjuntos, se los puede manipular con las operaciones de ellos. En específico hay tres operaciones principales:
   \begin{itemize}
     \item<2-> El \textbf{complemento} de un evento \(\bar{E}\), que son los casos en los que no pasa el evento \(E\): \(P(\bar{E}) = 1 - P(E)\).
     \item<3-> La \textbf{intersección} de dos eventos, que son los casos en los que pasan ambos a la vez: \(P(E_{1} \cap E_{2})\), la ecuación la vemos en un par de slides.
@@ -100,7 +100,7 @@
   \begin{gather*}
     P(A | B) = \dfrac{P(A \cap B)}{P(B)}
   \end{gather*}
-  Esta es la probabilidad de que pasen \(A\) y \(B\) dado que pasa \(B\). \pause \\
+  Esta es la probabilidad de que pase \(A\) dado que pasa \(B\). \pause \\
   Con esto se puede derivar la probabilidad de la intersección de dos eventos como:
   \begin{gather*}
     P(A \cap B) = P(A | B) \cdot P(B)
@@ -110,6 +110,8 @@
     P(A \cap B) = P(A) \cdot P(B)
   \end{gather*}
 \end{frame}
+
+% TODO: P(B) = 0
 
 \subsection{Variables aleatorias}
 

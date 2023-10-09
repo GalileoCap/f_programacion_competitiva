@@ -79,18 +79,18 @@
 
   En cada posición queremos decidir si movernos hacia la izquierda o hacia la derecha. \pause Y obviamente queremos tomar la dirección que nos de la cantidad mínima esperada de cuadras que caminaríamos. \pause \\
   Esto es el mismo problema que tenemos ahora mismo pero con un poco más de información (la de ya haber caminado por donde nos movamos). \pause \\
-  Por lo que es claro que se resuelve con recursión.
+  Por lo que es claro que se puede resolver con recursión.
 \end{frame}
 
 \begin{frame}
   \frametitle{\SECTIONB}
   \framesubtitle{\EJB}
 
-  En específico vamos a tener que llamar \(f(M, M, \text{L})\). Con \(p(l, r) = P(\text{No esté en } [l, r]) = 1 - P(\text{Sí esté en } [l, r])\) y:
+  En específico podemos llamar \(f(M, M, \text{L})\). Con \(p(l, r) = P(\text{No esté en } [l, r]) = 1 - P(\text{Sí esté en } [l, r])\) y:
   \begin{gather*}
     f(l, r, dir) = \begin{cases}
       \infty & \text{if } l < 0 \lor r \geq 2M \\
-      0 & \text{if } l == 0 \land r == 2M-1 \\
+      0 & \text{if } l = 0 \land r = 2M-1 \\
       min( \\
       \tab mantenerDir(l, r, dir), \\
       \tab cambiarDir(l, r, dir) \\

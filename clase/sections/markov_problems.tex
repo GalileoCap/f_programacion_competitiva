@@ -24,7 +24,7 @@
   Primero vamos a querer simular a cada robot, para calcular su distribución después de \(k\) pasos. \pause Esto es simple: Calculamos la matriz de transición, la elevamos a \(k\), y luego la multiplicamos por cada vector inicial. \pause \\
   Una vez que tenemos las distribuciones para cada robot, podemos calcular la probabilidad de que no haya ningún robot en un casillero como el producto del complemento de las probabilidades de todos los robots. \pause
   \begin{align*}
-    P(\text{No haya ningún en } \langle r, c \rangle) &= \bigcap_{0 \leq i < 64} P(\text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
+    P(\text{No haya ningún en } \langle r, c \rangle) &= P(\bigcap_{0 \leq i < 64} \text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
                                                       &= \prod_{0 \leq i < 64}P(\text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
                                                       &= \prod_{0 \leq i < 64}(1 - P(\text{El robot } i \text{ sí esté en } \langle r, c \rangle)) \\
                                                       &= \prod_{0 \leq i < 64}(1 - (M^{k}v_{i,0})_{8r + c}) \\
