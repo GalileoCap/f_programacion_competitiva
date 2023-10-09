@@ -1,0 +1,116 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\newcommand{\SECTIONB}{Problemas de Probabilidad}
+\section{\SECTIONB}
+
+\newcommand{\EJA}{\href{https://cses.fi/problemset/task/1725/}{CSES 1725 - Dice Probability}}
+\subsection{CSES 1725 - Dice Probability}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\EJA}
+
+  Tirando un dado de seis caras \(n\) veces. ¿Cual es la probabilidad de que la suma de los resultados esté entre \(a\) y \(b\)? \pause \\
+  Primero nombramos a la VA \(S_{n}\) como la suma de las \(n\) tiradas. Entonces queremos calcular \(P(a \leq S_{n} \leq b)\). \pause \\
+  Esto es lo mismo que:
+  \begin{align*}
+    P(a \leq S_{n} \leq b) &= P(S_{n} = a \cup S_{n} = a+1 \cup \ldots \cup S_{n} = b) \\
+                           &= P(S_{n} = a) + P(S_{n} = a+1) + \ldots + P(S_{n} = b)
+  \end{align*} \pause
+  Ahora \(n = 1\) es fácil, ya que \(S_{1}\) es lo mismo que el resultado de tirar un sólo dado. \\
+  ¿Cómo hacemos para \(n > 1\)?
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\EJA\ para \(n > 1\)}
+
+  Tomamos \(X_{j}\) al resultado de la \(j\)-ésima tirada. \\
+  Al tirar el \(j\)-ésimo dado ya tenemos la suma parcial \(S_{j} = X_{1} + X_{2} + \ldots + X_{j}\). \pause \\
+  Esto nos permite calcular la probabilidad de los valores de la \((j+1)\)-ésima tirada como:
+  {\small
+  \begin{align*}
+    P(S_{j+1} = x) &= P(X_{j+1} = 1 | S_{j} = x - 1) + P(X_{j+1} = 2 | S_{j} = x - 2) + \ldots \\
+                  & + P(X_{j+1} = 6 | S_{j} = x - 6)  \\
+                  &= \sum_{i = 1}^{6}P(X_{j+1} = i | S_{j} = x - i) \\
+                  &= \sum_{i = 1}^{6}P(X_{j+1} = i) \cdot P(S_{j} = x - i) \\
+                  &= \sum_{i = 1}^{6}\frac{1}{6} \cdot P(S_{j} = x - i) = \frac{1}{6}\sum_{i = 1}^{6}P(S_{j} = x - i) \\
+  \end{align*}
+  }%
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\EJA\ para \(n > 1\)}
+
+  Quedándonos con:
+  \begin{gather*}
+    P(S_{j+1} = x) = \frac{1}{6}\sum_{i = 1}^{6}P(S_{j} = x - i)
+  \end{gather*}
+  Y resaltando que \(j \leq S_{j} \leq 6j\). \\
+  Podemos entonces calcular \(P(S_{n} = x)\) recursivamente llamando a la siguiente función con \(f(n, x)\):
+  \begin{gather*}
+    f(j, x) = \begin{cases}
+      0 & \text{if } \neg(j \leq x \leq 6j) \\
+      \frac{1}{6} & \text{if } j = 1 \\
+      \frac{1}{6}\sum_{i = 1}^{6}f(j-1, x-i) & \text{otherwise} \\
+    \end{cases}
+  \end{gather*} \pause
+  Ver código.
+\end{frame}
+
+\newcommand{\EJB}{\href{https://codeforces.com/group/YjFmW2O15Q/contest/101919}{TAP 2018 E, Estacionamiento}}
+\subsection{TAP 2018 E, Estacionamiento}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\EJB}
+
+  Tenemos \(M\) cuadras a nuestra izquierda y a nuestra derecha y queremos encontrar nuestro auto. Para cada cuadra sabemos la probabilidad de que el auto se encuentre en ella. Asumiendo que nos movemos de forma óptima, queremos calcular la cantidad mínima de cuadras que caminaríamos en promedio hasta encontrarlo.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\EJB}
+
+  En cada posición queremos decidir si movernos hacia la izquierda o hacia la derecha. \pause Y obviamente queremos tomar la dirección que nos de la cantidad mínima esperada de cuadras que caminaríamos. \pause \\
+  Esto es el mismo problema que tenemos ahora mismo pero con un poco más de información (la de ya haber caminado por donde nos movamos). \pause \\
+  Por lo que es claro que se resuelve con recursión.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONB}
+  \framesubtitle{\EJB}
+
+  En específico vamos a tener que llamar \(f(M, M, \text{L})\). Con \(p(l, r) = P(\text{No esté en } [l, r]) = 1 - P(\text{Sí esté en } [l, r])\) y:
+  \begin{gather*}
+    f(l, r, dir) = \begin{cases}
+      \infty & \text{if } l < 0 \lor r \geq 2M \\
+      0 & \text{if } l == 0 \land r == 2M-1 \\
+      min( \\
+      \tab mantenerDir(l, r, dir), \\
+      \tab cambiarDir(l, r, dir) \\
+      ) & \text{otherwise}
+    \end{cases}
+  \end{gather*}
+
+  \begin{gather*}
+    mantenerDir(l, r, dir) = \begin{cases}
+      p(l, r) + f(l-1, r, \text{L}) & \text{if } dir = \text{L} \\
+      p(l, r) + f(l, r+1, \text{R}) & \text{if } dir = \text{R}
+    \end{cases}
+  \end{gather*}
+
+  \begin{gather*}
+    cambiarDir(l, r, dir) = \begin{cases}
+      p(l, r) \cdot |[l, r]| + f(l-1, r, \text{R}) & \text{if } dir = \text{L} \\
+      p(l, r) \cdot |[l, r]| + f(l, r+1, \text{L}) & \text{if } dir = \text{R}
+    \end{cases}
+  \end{gather*}
+\end{frame}
+
+\end{document}

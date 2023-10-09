@@ -1,0 +1,44 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\newcommand{\SECTIOND}{Problemas de Markov}
+\section{\SECTIOND}
+
+\newcommand{\EJD}{\href{https://cses.fi/problemset/view/1726/}{CSES 1726 - Moving Robots}}
+\subsection{CSES 1726 - Moving Robots}
+
+\begin{frame}
+  \frametitle{\SECTIOND}
+  \framesubtitle{\EJD}
+
+  En cada casillero de un tablero de ajedrez de \(8 \times 8\) se tiene un robot. En cada paso todos los robots se mueven aleatoriamente a uno de sus casilleros adyacentes. Se pueden tener varios robots en un mismo casillero. \\
+  Se busca calcular la cantidad esperada de casilleros vacíos después de \(k\) pasos. \pause \\
+  Este problema se parece mucho al que hicimos antes, sólo que ahora en lugar de tener un sólo robot tenemos varios, y el tablero es más grande.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIOND}
+  \framesubtitle{\EJD, para cada casillero}
+
+  Primero vamos a querer simular a cada robot, para calcular su distribución después de \(k\) pasos. \pause Esto es simple: Calculamos la matriz de transición, la elevamos a \(k\), y luego la multiplicamos por cada vector inicial. \pause \\
+  Una vez que tenemos las distribuciones para cada robot, podemos calcular la probabilidad de que no haya ningún robot en un casillero como el producto del complemento de las probabilidades de todos los robots. \pause
+  \begin{align*}
+    P(\text{No haya ningún en } \langle r, c \rangle) &= \bigcap_{0 \leq i < 64} P(\text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
+                                                      &= \prod_{0 \leq i < 64}P(\text{El robot } i \text{ no esté en } \langle r, c \rangle) \\
+                                                      &= \prod_{0 \leq i < 64}(1 - P(\text{El robot } i \text{ sí esté en } \langle r, c \rangle)) \\
+                                                      &= \prod_{0 \leq i < 64}(1 - (M^{k}v_{i,0})_{8r + c}) \\
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIOND}
+  \framesubtitle{\EJD, solución}
+
+  Y ahora, teniendo la probabilidad de que no haya ningún robot en cada casillero. Tenemos que la cantidad esperada de casilleros vacíos es la suma de estas probabilidades. \pause 
+  \begin{gather*}
+    E(\text{Vacíos después de \(k\) pasos}) = \sum_{\langle r, c \rangle}1 \cdot P(\text{No haya ningún en } \langle r, c \rangle)
+  \end{gather*}
+\end{frame}
+
+\end{document}

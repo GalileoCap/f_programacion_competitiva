@@ -1,0 +1,194 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\newcommand{\SECTIONA}{Introducción a la probabilidad}
+\section{\SECTIONA}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+
+  La probabilidad es una forma de medir y pensar sobre la probabilidad de que pasen eventos. \pause Hay tres casos:
+  \begin{itemize}
+    \item<2-> Un evento imposible, con probabilidad 0
+    \item<3-> Un evento que sí o sí sucede, con probabilidad 1
+    \item<4-> Y un evento que capaz sucede, con probabilidad entre 0 y 1.
+  \end{itemize} \pause \pause \pause % TODO: Sacar este hack, sino me aparece lo de abajo antes que el <4->
+  La forma en la que definimos la probabilidad \(P\) de un \textbf{evento} \(E\) en un \textbf{espacio} \(S\) de posibilidades es la frecuencia con la que pasa. Es decir:
+  \begin{gather*}
+    0 \leq P(E) \leq 1 \\
+    P(E) = \dfrac{|\{s \in S \text{ tal que ocurre } E \text{ en } s\}|}{|S|}
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Ejemplos de probabilidades}
+
+  Por ejemplo, tirando un dado de seis caras el resultado es un entero entre 1 y 6, el espacio \(S = \{1, 2, 3, 4, 5, 6\}\). \pause Así tenemos que entonces al tirar un dado:
+  \begin{itemize}
+    \item<2-> \(P(\text{''sale un 4''}) = \dfrac{|\{4\}|}{|\{1, 2, 3, 4, 5, 6\}|} = \dfrac{1}{6}\). Similar para cualquiera de las seis caras.
+    \item<3-> \(P(\text{''no sale un 6''}) = \dfrac{|\{1, 2, 3, 4, 5\}|}{|\{1, 2, 3, 4, 5, 6\}|} = \dfrac{5}{6}\). Similar para cualquiera de las seis caras.
+    \item<4-> \(P(\text{''sale par''}) = \dfrac{|\{2, 4, 6\}|}{|\{1, 2, 3, 4, 5, 6\}|} = \dfrac{3}{6} = \dfrac{1}{2}\). Similar para que salga impar.
+  \end{itemize}
+\end{frame}
+
+\subsection{Calculando probabilidades}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Calculando probabilidades}
+
+  Para calcular la probabilidad de un evento podemos o usar combinatoria o simular el proceso que genera al evento. \pause \\
+  Como ejemplo vamos a calcular la probabilidad de sacar tres cartas del mismo valor de un mazo de 48 cartas bien mezclado.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Calculando probabilidades usando combinatoria}
+
+  Este es el mismo método que vimos para los dados. \pause \\
+  Hay \(\binom{48}{3}\) formas de agarrar tres cartas cualquieras del mazo. \pause \\
+  Y como hay \(12\) posibles valores para las cartas y \(\binom{4}{3}\) formas de agarrar 3 palos de los cuatro palos posibles. Queda que hay \(12\binom{4}{3}\) casos en los que se cumple lo pedido. \pause \\
+  Por lo que la probabilidad del evento es:
+  \begin{gather*}
+    \dfrac{12\binom{4}{3}}{\binom{48}{3}} = \dfrac{12 \cdot 4}{17296} = \dfrac{48}{17296} = \dfrac{3}{1081} \approx 0.0028 = 0.28\%
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Calculando probabilidades simulando el evento}
+
+  En este método simulamos el proceso que genera al evento. \pause Que en este caso consiste de tres pasos en los que levantamos una carta en cada uno. Donde queremos que cada paso mantenga el evento deseado. \pause \\
+  Agarrando la primera carta no importa cual salga, porque no hay ninguna restricción. \pause \\
+  Agarrando la segunda de las 47 cartas restantes sólo nos sirven 3, por lo que hay \(\frac{3}{47}\) chances de que siga el evento. \pause \\
+  Y agarrando la tercera carta, similarmente, quedan 46 cartas y sólo nos sirven 2, por lo que hay \(\frac{2}{46}\) chances. \pause \\ Por lo que la probabilidad del evento es:
+  \begin{gather*}
+    1 \cdot \dfrac{3}{47} \cdot \dfrac{2}{46} = \dfrac{3}{1081} \approx 0.0028 = 0.28\%
+  \end{gather*}
+\end{frame}
+
+\subsection{Operaciones entre probabilidades}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Operaciones entre probabilidades}
+
+  Hay tres operaciones principales para las probabilidades:
+  \begin{itemize}
+    \item<2-> El \textbf{complemento} de un evento \(\bar{E}\), que son los casos en los que no pasa el evento \(E\): \(P(\bar{E}) = 1 - P(E)\).
+    \item<3-> La \textbf{intersección} de dos eventos, que son los casos en los que pasan ambos a la vez: \(P(E_{1} \cap E_{2})\), la ecuación la vemos en un par de slides.
+    \item<4-> Y la \textbf{unión} de dos eventos, que son los casos en los que pasa uno o el otro (o ambos): \(P(E_{1} \cup E_{2}) = P(E_{1}) + P(E_{2}) - P(E_{1} \cap E_{2})\). \pause \\
+      Restamos los casos en los que pasan ambos, ya que los estaríamos contando dos veces al sumarlos.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Probabilidad condicional}
+
+  La \textbf{probabilidad condicional} de un evento \(A\) dado otro evento \(B\) es:
+  \begin{gather*}
+    P(A | B) = \dfrac{P(A \cap B)}{P(B)}
+  \end{gather*}
+  Esta es la probabilidad de que pasen \(A\) y \(B\) dado que pasa \(B\). \pause \\
+  Con esto se puede derivar la probabilidad de la intersección de dos eventos como:
+  \begin{gather*}
+    P(A \cap B) = P(A | B) \cdot P(B)
+  \end{gather*} \pause
+  Y cuando sucede que \(P(A|B) = P(A)\) y \(P(B|A) = P(B)\) se los define como eventos \textbf{independientes} entre sí, y se tiene que:
+  \begin{gather*}
+    P(A \cap B) = P(A) \cdot P(B)
+  \end{gather*}
+\end{frame}
+
+\subsection{Variables aleatorias}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Variables aleatorias}
+
+  Una \textbf{variable aleatoria (VA)} es un valor generado por un proceso aleatorio. Por ejemplo, si tiramos dos dados, la suma de sus valores es una VA. \pause \\
+  Para una VA \(X\) y un valor \(x\) de ella, podemos definir \(P(X = x)\) como la probabilidad del evento en el que \(X\) vale \(x\). \pause \\
+
+  Sobre la VA \(X\), definimos la \textbf{esperanza} \(E(X)\) como el valor que tiene en promedio. Y se calcula:
+  \begin{gather*}
+    E(X) = \sum_{x}x \cdot P(X = x)
+  \end{gather*}
+  para \(x\) recorriendo todos los valores posibles de \(X\). \pause \\
+  Por ejemplo, al tirar un dado:
+  \begin{gather*}
+    E(X) = 1 \cdot \dfrac{1}{6} + 2 \cdot \dfrac{1}{6} + 3 \cdot \dfrac{1}{6} + 4 \cdot \dfrac{1}{6} + 5 \cdot \dfrac{1}{6} + 6 \cdot \dfrac{1}{6} = \dfrac{7}{2}
+  \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Linealidad de la esperanza}
+
+  Una propiedad útil de la esperanza es su \textbf{linealidad}. Es decir:
+  \begin{gather*}
+    E(X_{1} + X_{2} + \ldots + X_{k}) = E(X_{1}) + E(X_{2}) + \ldots + E(X_{k})
+  \end{gather*} \pause
+
+  Por ejemplo al tirar dos dados, si definimos a \(X_{1}\) como el valor del primer dado, y \(X_{2}\) como el del segundo, podemos calcular la esperanza de la suma usando la linealidad:
+  \begin{gather*}
+    E(X_{1} + X_{2}) = E(X_{1}) + E(X_{2}) = \dfrac{7}{2} + \frac{7}{2} = 7
+  \end{gather*} \pause
+
+  No hace falta que las VA sean independientes. Esto vale SIEMPRE.
+\end{frame}
+
+\subsection{Distribuciones}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones}
+
+  Una \textbf{distribución} es una forma de describir una VA. Nos permite saber para cada \(x\) cuánto vale \(P(X = x)\). Las distribuciones se pueden dar con una tabla, que para cada valor muestre la probabilidad, o con una fórmula que permite calcularla en cada valor de \(x\). \pause \\
+  Hay varias distribuciones ya conocidas, nos son relevantes cuatro.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones: Bernoulli y Binomial}
+
+  \begin{itemize}
+    \item VA de \textbf{Bernoulli}: Vale 0 ó 1, con probabilidad \(p\) de valer 1. \\
+      Ej: Tirar una moneda y considerar cara como 0 y ceca como 1.
+      \begin{gather*}
+        P(X = 1) = p \\
+        P(X = 0) = 1 - p \\
+        E(X) = p
+      \end{gather*}
+    \item<2-> VA \textbf{binomial}: Es la suma de \(n\) Bernoullis. \\
+      Ej: Tirar una moneda \(n\) veces y sumar sus resultados.
+      \begin{gather*}
+        P(X = x) = \binom{n}{x} \cdot p^{x} \cdot (1 - p)^{n - x} \\
+        E(X) = np
+      \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones: Geométrica y Uniforme}
+
+  \begin{itemize}
+    \item VA \textbf{geométrica}: En un proceso que evalúa Bernoullis de probabilidad \(p\), representa la cantidad de intentos hasta el primer éxito. \\
+      Ej: Tirar una moneda hasta que salga un 1 (ceca).
+      \begin{gather*}
+        P(X = x) = (1 - p)^{x - 1} \cdot p \\
+        E(X) = \dfrac{1}{p}
+      \end{gather*}
+    \item<2-> VA \textbf{uniforme}: Esta la usamos seguido en programación. La VA puede valer un entero cualquiera en el rango \([a, b]\) con misma probabilidad. \\
+      Ej: Sacar un número de bingo (sólo la primera vez).
+      \begin{gather*}
+        P(X = x) = \begin{cases} \dfrac{1}{b - a} & \text{if } a \leq x \leq b \\ 0 & \text{otherwise} \\ \end{cases} \\
+        E(X) = \dfrac{a + b}{2}
+      \end{gather*}
+  \end{itemize}
+\end{frame}
+
+\end{document}
