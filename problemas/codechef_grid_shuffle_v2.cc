@@ -4,7 +4,6 @@
 #include <limits>
 
 using tint = long long;
-using tfloat = long double;
 
 #define forsn(i, s, n) for (tint i = s; i < tint(n); i++)
 #define forn(i, n) forsn(i, 0, n)
@@ -20,6 +19,11 @@ tint T, N, K, R, C;
 tint M[4][4];
 tint V[MAX_T][MAX_K+1][4] = {0};
 
+tint modulo(tint x) {
+  //return x % MOD;
+  return (MOD + (x % MOD)) % MOD;
+}
+
 tint gcdExtended(tint a, tint b, tint *x, tint *y){
   if (a == 0) { // Caso base
     *x = 0; *y = 1;
@@ -27,10 +31,10 @@ tint gcdExtended(tint a, tint b, tint *x, tint *y){
   }
 
   tint x1, y1; // Para almacenar los resultados de las llamadas recursivas
-  tint gcd = gcdExtended(b%a, a, &x1, &y1);
+  tint gcd = gcdExtended(b % a, a, &x1, &y1);
 
   // Actualiza x e y usando los resultados de la llamada recursiva recursive call
-  *x = y1 - (b/a) * x1;
+  *x = modulo(y1 - modulo((b / a) * x1));
   *y = x1;
 
   return gcd;
@@ -39,28 +43,29 @@ tint gcdExtended(tint a, tint b, tint *x, tint *y){
 tint inverseMod(tint a) {
   tint x, y;
   gcdExtended(a, MOD, &x, &y);
-  return x;
+  return modulo(x);
 }
 
 void calcMatrix(tint n) {
-  tint gamma = inverseMod(2 * n * n),
-       beta = ((n-1) * gamma) % MOD, 
-       alpha = (1 - 2 * beta) % MOD,
-       delta = (1 - (gamma + beta)) % MOD,
-       epsilon = (1 - 2 * gamma);
+  tint beta = modulo((n-1) * inverseMod(2 * n * n)), 
+       alpha = modulo(1 - 2 * beta),
+       gamma = inverseMod(2 * n * n),
+       delta = modulo(1 - (gamma + beta)),
+       epsilon = modulo(1 - 2 * gamma);
 
-  M[0][0] = alpha; M[0][1] = beta; M[0][2] = beta; M[0][3] = 0;
-  M[1][0] = gamma; M[1][1] = delta; M[1][2] = 0; M[1][3] = beta;
-  M[2][0] = gamma; M[2][1] = 0; M[2][2] = delta; M[2][3] = beta;
-  M[3][0] = 0; M[3][1] = gamma; M[3][2] = gamma; M[3][3] = epsilon;
+  M[0][0] = alpha; M[0][1] = beta;  M[0][2] = beta;  M[0][3] = 0;
+  M[1][0] = gamma; M[1][1] = delta; M[1][2] = 0;     M[1][3] = beta;
+  M[2][0] = gamma; M[2][1] = 0;     M[2][2] = delta; M[2][3] = beta;
+  M[3][0] = 0;     M[3][1] = gamma; M[3][2] = gamma; M[3][3] = epsilon;
+}
+
+tint vprod(tint v[4], tint w[4]) {
+  return modulo(modulo(v[0] * w[0]) + modulo(v[1] * w[1]) + modulo(v[2] * w[2]) + modulo(v[3] * w[3]));
 }
 
 void step(tint prev[4], tint curr[4]) {
-  fforn(i, j, 4)
-    curr[i] += (M[j][i] * prev[j]) % MOD;
-
   forn(i, 4)
-    curr[i] %= MOD;
+    curr[i] = vprod(M[i], prev);
 }
 
 int main(void) {

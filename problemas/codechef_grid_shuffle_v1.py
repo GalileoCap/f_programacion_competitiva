@@ -17,6 +17,8 @@ def genMatrix(sz):
   delta = (1 - (gamma + beta)) % MOD
   epsilon = (1 - 2 * gamma) % MOD
 
+  print('A', alpha, beta, gamma, delta, epsilon)
+
   return [
     [alpha, beta, beta, 0],
     [gamma, delta, 0, beta],
@@ -32,6 +34,7 @@ def step(mat, v):
 
 def simulate(k, sz):
   mat = genMatrix(sz)
+  # print(mat)
   v = [1, 0, 0, 0]
 
   for _ in range(k):
