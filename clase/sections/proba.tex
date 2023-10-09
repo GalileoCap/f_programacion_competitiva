@@ -8,7 +8,7 @@
 \begin{frame}
   \frametitle{\SECTIONA}
 
-  La probabilidad es una forma de medir y pensar sobre la probabilidad de que pasen eventos. \pause Hay tres casos:
+  La probabilidad es una forma de medir y pensar sobre la posibilidad de que pasen eventos. \pause Hay tres casos (para eventos discretos):
   \begin{itemize}
     \item<2-> Un evento imposible, con probabilidad 0
     \item<3-> Un evento que sí o sí sucede, con probabilidad 1
@@ -61,12 +61,20 @@
   \framesubtitle{Calculando probabilidades simulando el evento}
 
   En este método simulamos el proceso que genera al evento. \pause Que en este caso consiste de tres pasos en los que levantamos una carta en cada uno. Donde queremos que cada paso mantenga el evento deseado. \pause \\
-  Agarrando la primera carta no importa cual salga, porque no hay ninguna restricción. \pause \\
+  Agarrando la primera carta no importa cuál salga, porque no hay ninguna restricción. \pause \\
   Agarrando la segunda de las 47 cartas restantes sólo nos sirven 3, por lo que hay \(\frac{3}{47}\) chances de que siga el evento. \pause \\
   Y agarrando la tercera carta, similarmente, quedan 46 cartas y sólo nos sirven 2, por lo que hay \(\frac{2}{46}\) chances. \pause \\ Por lo que la probabilidad del evento es:
   \begin{gather*}
     1 \cdot \dfrac{3}{47} \cdot \dfrac{2}{46} = \dfrac{3}{1081} \approx 0.0028 = 0.28\%
   \end{gather*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Probabilidad continua}
+  
+  En esta clase nos enfocamos en la probabilidad discreta, donde el espacio de valores es finito o infinito numerable (\(\{0, 1\}\), \(\mathbb{N}\), etc.). Pero también existe la probabilidad continua, donde el espacio de valores es infinito no-numerable (\(\mathbb{R}\)). \pause \\
+  En la probabilidad continua para cualquier valor particular \(x\) se tiene que \(P(X = x) = 0\), a pesar de que ese valor sea posible. \pause En cambio se habla de la probabilidad de que \(X\) pertenezca a un rango, o sea \(P(a \leq X \leq b)\).
 \end{frame}
 
 \subsection{Operaciones entre probabilidades}
@@ -110,9 +118,15 @@
   \framesubtitle{Variables aleatorias}
 
   Una \textbf{variable aleatoria (VA)} es un valor generado por un proceso aleatorio. Por ejemplo, si tiramos dos dados, la suma de sus valores es una VA. \pause \\
-  Para una VA \(X\) y un valor \(x\) de ella, podemos definir \(P(X = x)\) como la probabilidad del evento en el que \(X\) vale \(x\). \pause \\
+  Para una VA \(X\) y un valor \(x\) de ella, podemos definir \(P(X = x)\) como la probabilidad del evento en el que \(X\) vale \(x\).
+\end{frame}
 
-  Sobre la VA \(X\), definimos la \textbf{esperanza} \(E(X)\) como el valor que tiene en promedio. Y se calcula:
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Variables aleatorias: Esperanza}
+
+  Sobre las VA discreta \(X\), definimos la \textbf{esperanza} \(E(X)\) como el valor que tiene en promedio. Y se calcula:
   \begin{gather*}
     E(X) = \sum_{x}x \cdot P(X = x)
   \end{gather*}
@@ -137,7 +151,20 @@
     E(X_{1} + X_{2}) = E(X_{1}) + E(X_{2}) = \dfrac{7}{2} + \frac{7}{2} = 7
   \end{gather*} \pause
 
-  No hace falta que las VA sean independientes. Esto vale SIEMPRE.
+  No hace falta que las VA sean independientes. Esto vale \textbf{siempre}.
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Variables aleatorias: Varianza y desvío standard}
+
+  Sobre la VA discreta \(X\), definimos la \textbf{varianza} \(V(X)\) como:
+  \begin{gather*}
+    V(X) = \sum_{x}(x - E(X))^{2}P(X = x) = E[(X - E(X))^{2}]
+  \end{gather*}
+  para \(x\) recorriendo todos los valores posibles de \(X\). \pause \\
+  Es difícil interpretar al valor de la varianza, por lo que también se habla del desvío standard \(\sigma_{X} = +\sqrt{V(X)}\). \pause Este nos da una idea de qué tan dispersos son los valores en relación a la esperanza.
+
 \end{frame}
 
 \subsection{Distribuciones}
@@ -147,7 +174,7 @@
   \framesubtitle{Distribuciones}
 
   Una \textbf{distribución} es una forma de describir una VA. Nos permite saber para cada \(x\) cuánto vale \(P(X = x)\). Las distribuciones se pueden dar con una tabla, que para cada valor muestre la probabilidad, o con una fórmula que permite calcularla en cada valor de \(x\). \pause \\
-  Hay varias distribuciones ya conocidas, nos son relevantes cuatro.
+  Hay varias distribuciones ya conocidas, en esta clase vamos a ver cinco.
 \end{frame}
 
 \begin{frame}
@@ -189,6 +216,16 @@
         E(X) = \dfrac{a + b}{2}
       \end{gather*}
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\SECTIONA}
+  \framesubtitle{Distribuciones: Gaussiana (o Normal)}
+
+  La distribución \textbf{Gaussiana} o \textbf{Normal} es de las más comunes de usar. Es una distribución continua que que se define tal que \(E(X) = \mu\), y \(V(X) = \sigma^{2}\) con \(\mu, \sigma\) valores dados. \pause \\
+  Esta distribución tiene forma de campana con eje de simetría en \(\mu\), y tiene puntos de inflexión en \(\mu \pm \sigma\). \pause \\
+  Lo más común es hablar de la distribución \textbf{Gaussiana Standard} que tiene \(\mu = 0, \sigma^{2} = 1\). \pause Y de hecho cualquier distribución Gaussiana puede ser convertida en una Standard. \pause \\
+  Como calcular las probabilidades de una distribución Gaussiana cualquiera es complicado, se utiliza una tabla con los valores de la Standard pre-calculados.
 \end{frame}
 
 \end{document}
