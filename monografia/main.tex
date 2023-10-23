@@ -1,0 +1,69 @@
+\documentclass[a4paper,titlepage,draft]{article} % TODO: Change draft to final
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{subfiles}
+
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=magenta,      
+  urlcolor=cyan,
+}
+
+\usepackage{tkz-graph}
+\usepackage{chessboard}
+
+% Title page
+\title{Probabilidad Discreta y Cadenas de Markov}
+\author{F. Galileo Cappella Lewi}
+\date{Programación Competitiva 2\\2do cuatrimestre 2023}
+
+% Misc. macros
+\newcommand{\tab}{\phantom{mm}}
+
+% Chessboard macros
+\setchessboard{maxfield=c3, showmover=false, vlabel=false, hlabel=false}
+\newcommand{\chess}[1]{\chessboard[addpieces={R#1}]}
+\newcommand{\tchess}[1]{\chessboard[tinyboard, addpieces={R#1}]}
+
+% Tkz-graph macros
+\newcommand{\GVertex}[4]{\Vertex[L=#1,x=#2,y=#3]{#4}}
+\newcommand{\CVertex}[4]{\GVertex{\tchess{#1}}{#2}{#3}{#4}}
+\newcommand{\TVertex}[5]{\GVertex{{$\langle #1, #2 \rangle$}}{#3}{#4}{#5}}
+
+\tikzset{EdgeStyle/.style = {->}}
+\newcommand{\GEdge}[3]{\Edge[label=#1](#2)(#3)}
+\newcommand{\GBEdge}[3]{\Edge[style={bend left=30},label=#1](#2)(#3)}
+\newcommand{\GLoop}[3]{\Loop[dist=2cm,dir=#3,label=#1](#2)}
+
+% TODO: Label
+\newcommand{\GTuple}[2]{\ensuremath{\langle #1, #2 \rangle}}
+\newcommand{\Grrcc}{\GTuple{r^{+}}{c^{+}}}
+\newcommand{\Grrcm}{\GTuple{r^{+}}{c^{-}}}
+\newcommand{\Grmcc}{\GTuple{r^{-}}{c^{+}}}
+\newcommand{\Grmcm}{\GTuple{r^{-}}{c^{-}}}
+
+\newcommand{\GBETA}{\ensuremath{\frac{n-1}{2n^{2}}}}
+\newcommand{\GALPHA}{\ensuremath{1 - 2 \cdot \GBETA}}
+\newcommand{\GGAMMA}{\ensuremath{\frac{1}{2n^{2}}}}
+\newcommand{\GDELTA}{\ensuremath{1 - (\GGAMMA + \GBETA)}}
+\newcommand{\GEPSILON}{\ensuremath{1 - 2 \cdot \GGAMMA}}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+%\subfile{./sections/proba.tex}
+%\subfile{./sections/proba_problems.tex}
+%\subfile{./sections/markov.tex}
+%\subfile{./sections/markov_problems.tex}
+%\subfile{./sections/notas.tex}
+
+\end{document}
