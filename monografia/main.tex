@@ -1,11 +1,17 @@
-\documentclass[a4paper,titlepage,draft]{article} % TODO: Change draft to final
+\documentclass[draft]{article} % TODO: Change draft to final
+\usepackage[a4paper, total={7in, 10in}]{geometry}
 
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
-\usepackage{subfiles}
+\usepackage{subfiles,amsmath,amsfonts}
 
 \usepackage{graphicx}
 \graphicspath{ {./img/} }
+
+\usepackage{expl3}
+\ExplSyntaxOn
+\cs_new_eq:NN \Repeat \prg_replicate:nn
+\ExplSyntaxOff
 
 \usepackage{hyperref}
 \hypersetup{
@@ -24,7 +30,8 @@
 \date{Programación Competitiva 2\\2do cuatrimestre 2023}
 
 % Misc. macros
-\newcommand{\tab}{\phantom{mm}}
+\newcommand{\tab}[1][1]{\Repeat{#1}{\phantom{m}}}
+\newcommand{\abs}[1]{\ensuremath{|#1|}}
 
 % Chessboard macros
 \setchessboard{maxfield=c3, showmover=false, vlabel=false, hlabel=false}
@@ -61,11 +68,18 @@
 \newpage
 
 \subfile{./sections/intro.tex}
+\newpage
+
 \subfile{./sections/proba.tex}
+\newpage
+
 \subfile{./sections/markov.tex}
+\newpage
 
 \appendix
 \subfile{./sections/codigo.tex}
+\newpage
+
 \subfile{./sections/biblio.tex}
 
 \end{document}
