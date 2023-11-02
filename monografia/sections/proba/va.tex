@@ -64,8 +64,47 @@ Por ejemplo, al tirar un dado:
 
 Es importante resaltar que a pesar del nombre y de que se hable de ''el valor esperado'', el valor de la esperanza no necesariamente es un valor posible de \(X\). Sino que es el valor que se espera conseguir al promediar muchas mediciones de \(X\). Esto se ve con la \textbf{Ley de los Grandes Números}.
 
-% TODO: Histograma, con esperanza marcada. Para dar pié a la varianza
+\paragraph{} Una propiedad importante de la esperanza es su \textbf{linealidad}. Esto significa que para cualesquiera VA. \(X_{1}, X_{2}, \ldots, X_{k}\) se tiene que:
+\begin{gather*}
+  E(X_{1} + X_{2} + \ldots + X_{k}) = E(X_{1}) + E(X_{2}) + \ldots + E(X_{k})
+\end{gather*}
 
-\subsubsection{Distribuciones}
+\paragraph{} Otra propiedad útil es que \(E(aX + b) = aE(X) + b\)
+
+\paragraph{} También se define la \textbf{varianza} \(V(X)\) como:
+\begin{gather*}
+  V(X) = \sigma^{2}_{X} = \sum_{x \in \mathbb{R}_{X}}(x - E(X))^{2}P(X = x) = E[(X - E(X))^{2}] = E(X^{2}) - E(X)^{2}
+\end{gather*}
+Donde entonces \(\sigma = \sqrt{V(X)}\) mide la distancia promedio de los valores de \(X\) a su esperanza. A \(\sigma\) se la denomina la desviación estándar.
+
+\paragraph{} Para la varianza no se vale la linealidad.
+\paragraph{} Una propiedad útil es que \(V(aX + b) = a^{2}V(X)\)
+
+% TODO: Histograma, con esperanza marcada. Para dar pié a la varianza
+%\begin{tikzpicture}
+  %\begin{axis}[
+    %ymin=0, ymax=1,
+    %xmin=1, xmax=14,
+    %xtick distance=1,
+    %ybar interval,
+    %minor y tick num = 1,
+    %area style,
+  %]
+    %\addplot plot coordinates {
+      %(2, 1 / 36) (3, 0)
+      %(3, 2 / 36) (4, 0)
+      %(4, 3 / 36) (5, 0)
+      %(5, 4 / 36) (6, 0)
+      %(6, 5 / 36) (7, 0)
+      %(7, 6 / 36) (8, 0)
+      %(8, 5 / 36) (9, 0)
+      %(9, 4 / 36) (10, 0)
+      %(10, 3 / 36) (11, 0)
+      %(11, 2 / 36) (12, 0)
+      %(12, 1 / 36) (13, 0)
+    %};
+    %%\addplot[mark=none] plot coordinates { (7, 0) (7, 1) };
+  %\end{axis}
+%\end{tikzpicture}
 
 \end{document}

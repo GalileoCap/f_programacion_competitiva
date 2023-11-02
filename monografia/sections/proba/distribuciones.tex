@@ -1,0 +1,92 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection{Distribuciones}
+
+\paragraph{} Continuando con el uso en experimentos. Muchos experimentos cumplen condiciones similares, lo que nos causa un interés en analizarlos de forma genérica. Esto da pié a las \textbf{distribuciones}, que son VA. ya conocidas y analizadas.
+
+\subsubsection{Distribución de Bernoulli}
+
+\paragraph{} Consiste de una sola prueba con dos resultados posibles, un Éxito (con valor 1) o un Fracaso (con valor 0).
+
+Ej: Tirar una moneda y considera cara como 0 y ceca como 1.
+
+\begin{align*}
+  P(X = 1) &= p \\
+  P(X = 0) &= 1-p \\
+  E(X) &= p \\
+  V(X) &= p(1-p)
+\end{align*}
+
+\subsubsection{Distribución Binomial}
+
+\paragraph{} Se nota \(X \sim Bi(n, p)\), consiste de \(n\) pruebas de Bernoulli con probabilidad de éxito \(p\) independientes, y mide la probabilidad de que haya \(x\) éxitos entre las \(n\) pruebas.
+
+Ej: Tirar una moneda seis veces y sumar sus resultados. Se tendría \(X \sim Bi(6, 0.5)\)
+
+\begin{align*}
+  P(X = x) &= \binom{n}{x} \cdot p^{x} \cdot (1-p)^{n-x} & 0 \leq x \leq n \\
+  E(X) &= np \\
+  V(X) &= np(1-p)
+\end{align*}
+
+La función de probabilidad puntual considera las \(\binom{n}{x}\) secuencias con \(x\) éxitos y \(n-x\) fracasos, que al ser independientes entre sí cada secuencia tiene probabilidad \(p^{x}(1-p)^{n-x}\).
+
+\subsection{Distribución Geométrica}
+
+\paragraph{} Se nota \(X \sim G(p)\), consiste de repetir una prueba de Bernoulli con probabilidad de éxito \(p\) hasta conseguir el primer éxito, y mide la probabilidad de que se repita \(x\) veces y el \(x\)-ésimo intento sea el primer éxito.
+
+Ej: Tirar una moneda hasta que salga cara. Se tendría \(X \sim G(0.5)\)
+
+\begin{align*}
+  P(X = x) &= (1-p)^{x-1}p & 1 \leq x \\
+  E(X) &= \frac{1}{p} \\
+  V(X) &= \frac{1-p}{p^{2}}
+\end{align*}
+
+La función de probabilidad puntual considera la única secuencia con \(x-1\) fracasos y un éxito.
+
+\subsection{Distribución Binomial Negativa}
+
+\paragraph{} Se nota \(X \sim BN(r, p)\), generaliza a la Geométrica ya que consiste de repetir una prueba de Bernoulli con probabilidad de éxito \(p\) hasta conseguir el \(r\)-ésimo éxito, y mide la probabilidad de que se repita \(x\) veces hasta que el \(x\)-ésimo intento sea el \(r\)-ésimo éxito.
+
+Ej: Tirar una moneda hasta que salga cara seis veces. Se tendría \(X \sim BN(6, 0.5)\)
+
+\begin{align*}
+  P(X = x) &= \binom{x-1}{r-1}p^{r}(1-p)^{x-r} & r \leq x \\
+  E(X) &= \frac{r}{p} \\
+  V(X) &= \frac{r(1-p)}{p^{2}}
+\end{align*}
+
+La función de probabilidad puntual considera las \(\binom{x-1}{r-1}\) secuencias con \(x-1\) fracasos y \(r-1\) éxitos similar a la binomial, y también considera que el \(x\)-ésimo intento es un éxito.
+
+\subsection{Distribución Hipergeométrica}
+
+\paragraph{} Se nota \(X \sim H(n, N, D)\), mide la probabilidad de que al tomar \(n\) muestras de una población de tamaño \(N\) donde hay \(D\) éxitos se encuentren \(x\) éxitos.
+
+Ej: De una urna con 3 bolillas blancas y 7 negras se extraen 4 bolillas \textit{sin reposición} y se define \(X\): número de bolillas blancas extraídas. Se tendría \(X \sim H(4, 10, 3)\)
+
+\begin{align*}
+  P(X = x) &= \frac{\binom{D}{x}\binom{N-D}{n-k}}{\binom{N}{n}} & \text{máx}(0, n - (N-D)) \leq x \leq \text{mín}(n, D) \\
+  E(X) &= n\frac{D}{N} \\
+  V(X) &= \binom{N-n}{N-1}n\frac{D}{N}(1-\frac{D}{N})
+\end{align*}
+
+La función de probabilidad considera los \(\binom{N}{n}\) subconjuntos de tamaño \(n\) de un conjunto de tamaño \(N\). Y de esos hay \(\binom{D}{x}\binom{N-D}{n-x}\) que contienen \(x\) éxitos y \(n-x\) fracasos.
+
+\subsection{Distribución de Poisson}
+
+\paragraph{} Se nota \(X \sim P(\lambda)\) y aproxima a una binomial cuando \(n\) "es grande" y \(p\) "es chiquito" (generalmente \(n \geq 100\), \(p \leq 0.01\), y \(np \leq 20\)).
+
+\begin{align*}
+  P(X = x) &= \frac{e^{-\lambda}\lambda^{x}}{x!} & 0 \leq x
+  E(X) &= \lambda \\
+  V(X) &= \lambda
+\end{align*}
+
+La función de probabilidad viene de que para una VA. \(X \sim Bi(n, p)\) cuando \(n \rightarrow \infty\), \(p \rightarrow 0\), y \(n \cdot p = \lambda\) (fijo), se tiene que \(P(X = x) \rightarrow \frac{e^{-\lambda}\lambda^{x}}{x!} \forall x \geq 0\)
+
+\paragraph{} Esta distribución da pié a lo que se llama un \textbf{Proceso de Poisson} que nos permite pensar en ocurrencias de un evento a lo largo del tiempo. %TODO: Explicar
+
+\end{document}
