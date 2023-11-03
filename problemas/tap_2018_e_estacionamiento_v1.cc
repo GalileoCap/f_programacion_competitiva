@@ -22,7 +22,14 @@ enum Direction {
 };
 
 tint N;
-std::vector<tfloat> PrefixOdds;
+std::vector<tfloat> Odds;
+
+tfloat p(tint l, tint r) { // Probabilidad de que no este en [l, r]
+  tfloat res = 0;
+  for (tint i = l; i <= r; i++)
+    res += Odds[i];
+  return 1 - res;
+}
 
 tfloat f(tint l, tint r, Direction direction) {
   if (l < 0 or r >= N)
@@ -31,16 +38,12 @@ tfloat f(tint l, tint r, Direction direction) {
   if (l == 0 and r == N-1)
     return 0;
 
-  tfloat pC = 1 - (PrefixOdds[r+1] - PrefixOdds[l]); // Probabilidad de que NO esté en este rango
+  tfloat pC = p(l, r); // Probabilidad de que no esté en este rango
   tint distance = r - l + 1; // Distancia a caminar si cambio de dirección
-  tfloat goingLeft = pC * (direction == RIGHT ? distance : 1) + f(l - 1, r, LEFT),
-         goingRight = pC * (direction == LEFT ? distance : 1) + f(l, r + 1, RIGHT);
+  tfloat mantenerDir = pC + (direction == LEFT ? f(l-1, r, LEFT) : f(l, r+1, RIGHT)),
+         cambiarDir = pC * (r - l + 1) + (direction == LEFT ? f(l, r+1, RIGHT) : f(l-1, r, LEFT));
 
-  tfloat res = std::min(goingLeft, goingRight);
-#ifdef VERBOSE
-  std::cout << "f(" << l << ", " << r << ", " << (direction == LEFT ? "L" : "R") << ") = " << FIXED << res << std::endl;
-#endif
-  return res;
+  return std::min(mantenerDir, cambiarDir);
 }
 
 int main(void) {
@@ -55,13 +58,9 @@ int main(void) {
   N = 2*M+1;
 
   // Recibo las probabilidades por calle
-  std::vector<tfloat> odds(N, 0);
-  forn(i, M) std::cin >> odds[i];
-  forsn(i, M+1, N) std::cin >> odds[i];
-
-  // Calculo el vector de prefijos
-  PrefixOdds.resize(N+1, 0);
-  forn(i, N) PrefixOdds[i+1] = PrefixOdds[i] + odds[i];
+  Odds.resize(N);
+  forn(i, M) std::cin >> Odds[i];
+  forsn(i, M+1, N) std::cin >> Odds[i];
 
   // Calculo el resultado
   tfloat res = f(M, M, LEFT);

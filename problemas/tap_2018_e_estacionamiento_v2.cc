@@ -1,12 +1,10 @@
-// 1029ms, 188900KB
+// 498ms, 284900KB
 
 #include <ios>
 #include <iostream>
 #include <iomanip>
 #include <limits>
-#include <tuple>
 #include <vector>
-#include <map>
 
 using tint = long long;
 using tfloat = long double;
@@ -24,10 +22,15 @@ enum Direction {
 };
 
 tint N;
-std::vector<tfloat> PrefixOdds;
+std::vector<tfloat> Odds;
+std::vector<std::vector<std::vector<tfloat>>> Memory;
 
-using Case = std::tuple<tint, tint, Direction>;
-std::map<Case, tfloat> Memory;
+tfloat p(tint l, tint r) { // Probabilidad de que no este en [l, r]
+  tfloat res = 0;
+  for (tint i = l; i <= r; i++)
+    res += Odds[i];
+  return 1 - res;
+}
 
 tfloat f(tint l, tint r, Direction direction) {
   if (l < 0 or r >= N)
@@ -36,23 +39,19 @@ tfloat f(tint l, tint r, Direction direction) {
   if (l == 0 and r == N-1)
     return 0;
 
-  const Case thisCase = {l, r, direction};
-  if (Memory.count(thisCase) == 0) {
-    tfloat pC = 1 - (PrefixOdds[r+1] - PrefixOdds[l]); // Probabilidad de que NO esté en este rango
-    tint distance = r - l + 1; // Distancia a caminar si cambio de dirección
-    tfloat goingLeft = pC * (direction == RIGHT ? distance : 1) + f(l - 1, r, LEFT),
-           goingRight = pC * (direction == LEFT ? distance : 1) + f(l, r + 1, RIGHT);
+  tfloat& res = Memory[l][r][direction];
+  if (res < INF)
+    return res;
 
-    Memory[thisCase] = std::min(goingLeft, goingRight);
-#ifdef VERBOSE
-    std::cout << "f(" << l << ", " << r << ", " << (direction == LEFT ? "L" : "R") << ") = " << FIXED << Memory[thisCase] << std::endl;
-#endif
-  }
+  tfloat pC = p(l, r); // Probabilidad de que no esté en este rango
+  tint distance = r - l + 1; // Distancia a caminar si cambio de dirección
+  tfloat mantenerDir = pC + (direction == LEFT ? f(l-1, r, LEFT) : f(l, r+1, RIGHT)),
+         cambiarDir = pC * (r - l + 1) + (direction == LEFT ? f(l, r+1, RIGHT) : f(l-1, r, LEFT));
 
-  return Memory[thisCase];
+  return res = std::min(mantenerDir, cambiarDir);
 }
 
-void submitRun(void) {
+int main(void) {
   // Optimizaciones genéricas
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
@@ -63,56 +62,15 @@ void submitRun(void) {
   N = 2*M+1;
 
   // Recibo las probabilidades por calle
-  std::vector<tfloat> odds(N, 0);
-  forn(i, M) std::cin >> odds[i];
-  forsn(i, M+1, N) std::cin >> odds[i];
+  Odds.resize(N);
+  forn(i, M) std::cin >> Odds[i];
+  forsn(i, M+1, N) std::cin >> Odds[i];
 
-  // Calculo el vector de prefijos
-  PrefixOdds.resize(N+1, 0);
-  forn(i, N) PrefixOdds[i+1] = PrefixOdds[i] + odds[i];
+  Memory.resize(N, std::vector<std::vector<tfloat>>(N, std::vector<tfloat>(2, INF)));
 
   // Calculo el resultado
   tfloat res = f(M, M, LEFT);
 
   // Devuelvo el resultado
   std::cout << FIXED << res << std::endl;
-}
-
-void testRun(void) {
-  while (true) {
-    // Limpio la memoria
-    Memory.clear();
-
-    // Recibo la cantidad de calles a cada lado
-    tint M;
-    if (not (std::cin >> M))
-      break;
-    N = 2*M+1;
-
-    // Recibo las probabilidades por calle
-    std::vector<tfloat> odds(N, 0);
-    forn(i, M) std::cin >> odds[i];
-    forsn(i, M+1, N) std::cin >> odds[i];
-
-    // Calculo el vector de prefijos
-    PrefixOdds.resize(N+1, 0);
-    forn(i, N) PrefixOdds[i+1] = PrefixOdds[i] + odds[i];
-
-    tfloat expected;
-    std::cin >> expected;
-    
-    // Calculo el resultado
-    tfloat res = f(M, M, LEFT);
-
-    // Devuelvo el resultado
-    std::cout << FIXED << expected << " " << res << std::endl;
-  }
-}
-
-int main(void) {
-#ifndef TEST
-  submitRun();
-#else
-  testRun();
-#endif
 }
