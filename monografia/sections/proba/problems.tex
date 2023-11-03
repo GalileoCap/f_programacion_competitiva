@@ -53,60 +53,64 @@ Podemos calcular \(P(S_{n} = x)\) recursivamente llamando a la siguiente funció
 Pero se puede notar que como usa recursión y hay superposición de subproblemas en las llamadas a \(f\) se puede utilizar programación dinámica.
 \lstinputlisting{cses_1725_dice_probability_v3.cc}
 
+\subsection{\href{https://codeforces.com/group/YjFmW2O15Q/contest/101919}{TAP 2018 E, Estacionamiento}}
+
+\paragraph{} Tenemos \(M\) cuadras a nuestra izquierda y a nuestra derecha y queremos encontrar nuestro auto. Para cada cuadra sabemos la probabilidad de que el auto se encuentre en ella. Asumiendo que nos movemos de forma óptima, queremos calcular la cantidad mínima de cuadras que caminaríamos en promedio hasta encontrarlo.
+
+\subsubsection{Solución Matemática}
+
+\paragraph{} En cada posición queremos decidir si movernos hacia la izquierda o hacia la derecha. Y obviamente queremos tomar la dirección que nos de la cantidad mínima esperada de cuadras que caminaríamos.
+
+Si un oráculo nos diera la respuesta correcta para este movimiento al movernos nos encontramos con el mismo problema pero con un poco más de información (la de ya haber caminado por donde hayamos ido).
+
+Por lo que es claro que se puede resolver con recursión, tomando como caso base al de haber explorado todas las cuadras (por lo que sí o sí deberíamos de haber encontrado el auto).
+
+\paragraph{} Definimos entonces la función \(f\) tal que \(f(l, r, dir)\) sea el valor deseado para el caso de que nos queden \(l\) y \(r\) cuadras sin explorar hacia la izquierda y derecha respectivamente, y en el último paso nos hayamos movido hacia \(dir \in \{\text{L}, \text{R}\}\) (la izquierda o la derecha).
+
+Esta función tiene como caso base al que \(l = 0 \land r = 2M-1\) ya que en él ya exploramos todas las cuadras y sí o sí encontramos el auto.
+
+Luego en los pasos recursivos, considerando la probabilidad de que todavía no encontramos al auto, tenemos dos opciones:
+\begin{itemize}
+  \item Mantener la dirección, y sumar una cuadra.
+  \item Cambiar de dirección y caminar \(|[l, r]|\) cuadras.
+\end{itemize}
+
+\paragraph{} Entonces finalmente podemos llamar a \(f(0, 0, \text{L}) = f(0, 0, \text{R})\) con:
+\begin{gather*}
+  p(l, r) = P(\text{No esté en } [l, r]) = 1 - P(\text{Sí esté en } [l, r]) = 1 - P(\cup_{i = l}^{r} \text{Esté en } i) = 1 - \sum_{i = l}^{r}P(\text{Esté en } i) \\
+  f(l, r, dir) = \begin{cases}
+    \infty & \text{if } l < 0 \lor r \geq 2M \\
+    0 & \text{if } l = 0 \land r = 2M-1 \\
+    min( \\
+    \tab mantenerDir(l, r, dir), \\
+    \tab cambiarDir(l, r, dir) \\
+    ) & \text{otherwise}
+  \end{cases} \\
+  mantenerDir(l, r, dir) = \begin{cases}
+    p(l, r) + f(l-1, r, \text{L}) & \text{if } dir = \text{L} \\
+    p(l, r) + f(l, r+1, \text{R}) & \text{if } dir = \text{R}
+  \end{cases} \\
+  cambiarDir(l, r, dir) = \begin{cases}
+    p(l, r) \cdot |[l, r]| + f(l, r+1, \text{R}) & \text{if } dir = \text{L} \\
+    p(l, r) \cdot |[l, r]| + f(l-1, r, \text{L}) & \text{if } dir = \text{R}
+  \end{cases}
+\end{gather*}
+
+Agregando el caso base \(l < 0 \lor r \geq 2M\) para simplificar cuando se intenta moverse hacia afuera del espacio de búsqueda, como tomamos el mínimo devuelve infinito para que nunca sea la respuesta correcta.
+
+\subsubsection{Implementación}
+
+\paragraph{} La primera versión implementa directamente la función descrita previamente.
+\lstinputlisting{tap_2018_e_estacionamiento_v1.cc}
+
+\paragraph{} Esta implementación no es suficientemente eficiente por lo que no llega a pasar a tiempo.
+
+Pero se puede notar que como usa recursión y hay superposición de subproblemas en las llamadas a \(f\) se puede utilizar programación dinámica.
+\lstinputlisting{tap_2018_e_estacionamiento_v2.cc}
+
+\paragraph{} Esta segunda implementación todavía no es suficientemente eficiente, ya que el costo de calcular \(p(l, r)\) es muy costoso.
+
+Para optimizarla podemos utilizar tablas aditivas.
+\lstinputlisting{tap_2018_e_estacionamiento_v3.cc}
+
 \end{document}
-
-\subsubsection{\href{https://codeforces.com/group/YjFmW2O15Q/contest/101919}{TAP 2018 E, Estacionamiento}}
-
-\begin{frame}
-  \frametitle{\SECTIONB}
-  \framesubtitle{\EJB}
-
-  Tenemos \(M\) cuadras a nuestra izquierda y a nuestra derecha y queremos encontrar nuestro auto. Para cada cuadra sabemos la probabilidad de que el auto se encuentre en ella. Asumiendo que nos movemos de forma óptima, queremos calcular la cantidad mínima de cuadras que caminaríamos en promedio hasta encontrarlo.
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{\SECTIONB}
-  \framesubtitle{\EJB}
-
-  En cada posición queremos decidir si movernos hacia la izquierda o hacia la derecha. \pause Y obviamente queremos tomar la dirección que nos de la cantidad mínima esperada de cuadras que caminaríamos. \pause \\
-  Esto es el mismo problema que tenemos ahora mismo pero con un poco más de información (la de ya haber caminado por donde nos movamos). \pause \\
-  Por lo que es claro que se puede resolver con recursión.
-\end{frame}
-
-\begin{frame}
-  \frametitle{\SECTIONB}
-  \framesubtitle{\EJB}
-
-  En específico podemos llamar \(f(M, M, \text{L})\). Con \(p(l, r) = P(\text{No esté en } [l, r]) = 1 - P(\text{Sí esté en } [l, r])\) y:
-  \begin{gather*}
-    f(l, r, dir) = \begin{cases}
-      \infty & \text{if } l < 0 \lor r \geq 2M \\
-      0 & \text{if } l = 0 \land r = 2M-1 \\
-      min( \\
-      \tab mantenerDir(l, r, dir), \\
-      \tab cambiarDir(l, r, dir) \\
-      ) & \text{otherwise}
-    \end{cases}
-  \end{gather*}
-
-  \begin{gather*}
-    mantenerDir(l, r, dir) = \begin{cases}
-      p(l, r) + f(l-1, r, \text{L}) & \text{if } dir = \text{L} \\
-      p(l, r) + f(l, r+1, \text{R}) & \text{if } dir = \text{R}
-    \end{cases}
-  \end{gather*}
-
-  \begin{gather*}
-    cambiarDir(l, r, dir) = \begin{cases}
-      p(l, r) \cdot |[l, r]| + f(l-1, r, \text{R}) & \text{if } dir = \text{L} \\
-      p(l, r) \cdot |[l, r]| + f(l, r+1, \text{L}) & \text{if } dir = \text{R}
-    \end{cases}
-  \end{gather*}
-\end{frame}
-
-\subsubsection{...}
-
-\end{document}
-
-
