@@ -13,6 +13,7 @@ using tfloat = long double;
 #define FIXED std::fixed << std::setprecision(6)
 
 #define MAX_M 1000
+#define MAX_N (2 * MAX_M+1)
 #define INF std::numeric_limits<tfloat>::max()
 
 enum Direction {
@@ -21,7 +22,11 @@ enum Direction {
 
 tint N;
 std::vector<tfloat> PrefixOdds;
-std::vector<std::vector<std::vector<tfloat>>> Memory;
+std::vector<std::vector<std::vector<tfloat>>> Memory(MAX_N, std::vector<std::vector<tfloat>>(MAX_N, std::vector<tfloat>(2, INF)));
+
+tfloat& getAt(tint l, tint r, Direction direction) {
+  return Memory[l][r][direction];
+}
 
 tfloat p(tint l, tint r) { // Probabilidad de que no este en [l, r]
   return 1 - (PrefixOdds[r+1] - PrefixOdds[l]);
@@ -34,7 +39,7 @@ tfloat f(tint l, tint r, Direction direction) {
   if (l == 0 and r == N-1)
     return 0;
 
-  tfloat& res = Memory[l][r][direction];
+  tfloat& res = getAt(l, r, direction);
   if (res < INF)
     return res;
 
@@ -60,8 +65,6 @@ int main(void) {
   std::vector<tfloat> odds(N, 0);
   forn(i, M) std::cin >> odds[i];
   forsn(i, M+1, N) std::cin >> odds[i];
-
-  Memory.resize(N, std::vector<std::vector<tfloat>>(N, std::vector<tfloat>(2, INF)));
 
   PrefixOdds.resize(N+1, 0);
   forn(i, N) PrefixOdds[i+1] = PrefixOdds[i] + odds[i];
