@@ -41,9 +41,9 @@ def plotMean(mean):
 
   writeImage(fig, 'mean')
 
-def plotPaths(data, n):
+def plotPaths(data):
   fig = go.Figure()
-  for path in data[:n]:
+  for path in data:
     fig.add_trace(scatter(path, 'red'))
 
   fig.add_hline( # Horizontal line at breaking even
@@ -59,9 +59,9 @@ def plotPaths(data, n):
 
   writeImage(fig, 'paths')
 
-def plotLogPaths(data, mean, median, n):
+def plotLogPaths(data, mean, median):
   fig = go.Figure()
-  for i in range(n):
+  for i in range(len(data)):
     fig.add_trace(scatter(data[i], 'pink', 'Riqueza Individual', i == 0))
   fig.add_trace(scatter(mean, 'blue', 'Riqueza Promedio'))
   fig.add_trace(scatter(median, 'red', 'Riqueza Mediana'))
@@ -86,9 +86,13 @@ def plot(numberOfPlayers, throws):
   mean = [np.mean(x) for x in transposed]
   median = [np.median(x) for x in transposed]
 
+  selected = data.copy()
+  np.random.shuffle(selected)
+  selected = selected[:20]
+
   plotMean(mean)
-  plotPaths(data, 20)
-  plotLogPaths(data, mean, median, 20)
+  plotPaths(selected)
+  plotLogPaths(selected, mean, median)
 
 plot(10000, 100)
 # plot(3, 4)
