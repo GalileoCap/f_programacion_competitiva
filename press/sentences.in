@@ -1,3 +1,10 @@
-Hola soy Galileo
-Hola soy Federico
-Hola yo soy Galileo
+El primer algoritmo de búsqueda de Google Search utilizó cadenas de Markov para estimar qué tan importante es cada sitio web en base a las chances de que un link en otro sitio web apunte a él
+La idea fue modelar a una persona que inicia en un sitio web al azar y se mueve entre sitios clickeando links al azar
+Y luego calcular la distribución estacionaria a la que tiende esta persona
+La distribución estacionaria sería la distribución a la que tiende el vector de estado vk cuando k tiende a infinito
+Una forma de calcularla sería calcular el producto matricial con un k arbitrariamente grande y con un v0 cualquiera ya que a esta distribución se tiende desde cualquier estado
+Esto nos podría dar una estimación razonable
+Pero otra forma de calcularla es analizar la matriz de transición y encontrar si tiene el autovector donde la suma de sus componentes es igual a 1
+Este autovector sería la distribución estacionaria
+Y si no tiene autovector significa que no tiene distribución estacionaria
+Esta distribución estacionaria entonces es vector de estado y se toma de él la probabilidad de que la persona se encuentre en cada sitio para la estimación deseada

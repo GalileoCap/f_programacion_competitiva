@@ -4,6 +4,8 @@
 
 \subsection{Usos}
 \subsubsection{PageRank}
+\label{seq:markov:pagerank}
+
 \paragraph{} El primer algoritmo de búsqueda de Google Search utilizó cadenas de Markov para estimar qué tan importante es cada sitio web en base a las chances de que un link en otro sitio web apunte a él (y por ende, las chances de que una persona llegue a él).
 
 La idea fue modelar a una persona que inicia en un sitio web al azar y se mueve entre sitios clickeando links al azar (de los que tiene disponibles en el sitio actual). Y luego calcular la \textbf{distribución estacionaria} a la que tiende esta persona.
@@ -17,5 +19,46 @@ Pero otra forma de calcularla es analizar la matriz de transición y encontrar (
 Esta distribución estacionaria entonces es vector de estado, y se toma de él la probabilidad de que la persona se encuentre en cada sitio para la estimación deseada.
 
 \subsubsection{Dissociated Press}
+
+\paragraph{} Un programa divertido de hacer que utiliza Markov es el llamado \textbf{Dissociated Press}. La idea es generar texto aleatorio de forma que se parezca a un texto real.
+
+Para hacerlo este programa lee un texto original al que queremos parodiar, calcula la probabilidad de que cada palabra le siga a otra, y luego usa esas probabilidades para generar el texto.
+
+Por ejemplo, con las oraciones:
+\begin{enumerate}
+  \item "Hola soy Galileo"
+  \item "Hola soy Federico"
+  \item "Hola yo soy Galileo"
+\end{enumerate}
+
+Se tendría la siguiente tabla de probabilidades (para cada fila las chances de que cada columna le siga):
+\begin{center}
+\begin{tabular}{ c | c c c c c }
+  Palabra previa & Hola & yo & soy & Galileo & Federico \\ \hline
+  Hola & 0 & \(\frac{1}{3}\) & \(\frac{2}{3}\) & 0 & 0 \\
+  yo & 0 & 0 & 1 & 0 & 0 \\
+  soy & 0 & 0 & 0 & \(\frac{2}{3}\) & \(\frac{1}{3}\) \\
+  Galileo & 0 & 0 & 0 & 0 & 0 \\
+  Federico & 0 & 0 & 0 & 0 & 0 \\
+\end{tabular}
+\end{center}
+
+Entonces podemos empezando con una palabra cualquiera del texto como semilla, "Hola", podemos elegir la palabra que le sigue en base a su distribución. Y ahora toma como semilla a esta palabra elegida.
+
+\paragraph{} Corriendo este algoritmo 10 veces utilizando como texto original al de PageRank (\ref{seq:markov:pagerank}). Formé las siguientes oraciones:
+\begin{itemize}
+  \item una estimación razonable
+  \item autovector sería la persona que un k tiende esta distribución estacionaria a 1
+  \item azar y encontrar si tiene autovector significa que la distribución estacionaria sería la suma de estado y encontrar si tiene autovector sería la distribución a él la distribución estacionaria entonces es analizar la estimación razonable
+  \item un v0 cualquiera ya que a la estimación razonable
+  \item utilizó cadenas de búsqueda de Markov para estimar qué tan importante es igual a la distribución estacionaria entonces es vector de transición y con un link en un sitio web en base a las chances de calcularla es igual a él la que tiende a las chances de estado vk cuando
+  \item sus componentes es cada sitio para estimar qué tan importante es vector de que no tiene el producto matricial con un sitio web al azar y se tiende esta distribución estacionaria entonces es cada sitio para estimar qué tan importante es igual a 1
+  \item calcularla es igual a una estimación deseada
+  \item en un sitio web al azar y con un v0 cualquiera ya que la matriz de calcularla sería la matriz de calcularla sería calcular el vector de búsqueda de Google Search utilizó cadenas de búsqueda de estado vk cuando k arbitrariamente grande y se tiende esta persona que la distribución se
+  \item qué tan importante es igual a la distribución estacionaria a él la distribución se tiende el autovector sería la matriz de que un link en cada sitio web apunte a la probabilidad de él la que un v0 cualquiera ya que la distribución estacionaria a infinito
+  \item Una forma de él la persona que tiende esta persona se encuentre en otro sitio web al azar y encontrar si no tiene autovector significa que un sitio web al azar y se mueve entre sitios clickeando links al azar y se mueve entre sitios clickeando links al azar y se
+\end{itemize}
+
+\paragraph{} Este algoritmo se puede tunear mejor tomando como semilla las dos (o más) palabras previas. Esto genera textos cada vez más razonables.
 
 \end{document}

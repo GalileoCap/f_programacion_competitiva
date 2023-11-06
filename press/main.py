@@ -26,6 +26,14 @@ def getOdds(totals, occurences):
   
   return odds
 
+def getSeed(totals):
+  T = sum([x for _, x in totals.items()])
+  r = randint(1, T)
+  for word, x in totals.items():
+    r -= x
+    if r <= 0:
+      return word
+
 def chooseWord(totals, occurences, prev):
   if prev in totals:
     r = randint(1, totals[prev])
@@ -48,5 +56,5 @@ if __name__ == '__main__':
   fpath = sys.argv[1] # Archivo de oraciones, una oración por linea.
 
   totals, occurences = getOccurrences(fpath)
-  print(getOdds(totals, occurences))
-  print(createSentence(totals, occurences, 'Hola'))
+  # print(getOdds(totals, occurences))
+  print(createSentence(totals, occurences, getSeed(totals)))
