@@ -4,7 +4,18 @@
 
 \subsection{Usos}
 \subsubsection{PageRank}
+\paragraph{} El primer algoritmo de búsqueda de Google Search utilizó cadenas de Markov para estimar qué tan importante es cada sitio web en base a las chances de que un link en otro sitio web apunte a él (y por ende, las chances de que una persona llegue a él).
+
+La idea fue modelar a una persona que inicia en un sitio web al azar y se mueve entre sitios clickeando links al azar (de los que tiene disponibles en el sitio actual). Y luego calcular la \textbf{distribución estacionaria} a la que tiende esta persona.
+
+La distribución estacionaria sería la distribución a la que tiende el vector de estado \(v_{k}\) cuando \(k \rightarrow \infty\).
+
+Una forma de calcularla sería calcular \(M^{k}v_{0}\) con un \(k\) arbitrariamente grande y con un \(v_{0}\) cualquiera, ya que a esta distribución se tiende desde cualquier estado. Esto nos podría dar una estimación razonable.
+
+Pero otra forma de calcularla es analizar la matriz de transición y encontrar (si tiene) el \textbf{autovector} donde la suma de sus componentes es igual a 1 (ya que sino no sería una distribución de probabilidades). Este autovector sería la distribución estacionaria. Y si no tiene autovector significa que no tiene distribución estacionaria.
+
+Esta distribución estacionaria entonces es vector de estado, y se toma de él la probabilidad de que la persona se encuentre en cada sitio para la estimación deseada.
+
 \subsubsection{Dissociated Press}
-\subsubsection{... (mención)}
 
 \end{document}
