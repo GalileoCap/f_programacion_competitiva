@@ -1,25 +1,10 @@
-// 0.00s
-
-#include <ios>
-#include <iostream>
-#include <iomanip>
-#include <limits>
-
-using tint = long long;
-
-#define forsn(i, s, n) for (tint i = s; i < tint(n); i++)
-#define forn(i, n) forsn(i, 0, n)
-#define fforsn(i, j, s, n) forsn(i, s, n) forsn(j, s, n)
-#define fforn(i, j, n) fforsn(i, j, 0, n)
-
-#define MAX_T 5
 #define MAX_N 1000
 #define MAX_K MAX_N
 #define MOD 998244353
 
-tint T, N, K, R, C;
+tint N, K, R, C;
 tint M[4][4];
-tint V[MAX_T][MAX_K+1][4] = {0};
+tint V[MAX_K+1][4] = {0};
 
 tint modulo(tint x) {
   return (MOD + (x % MOD)) % MOD;
@@ -69,31 +54,17 @@ void step(tint prev[4], tint curr[4]) {
     curr[i] = vprod(M[i], prev);
 }
 
-int main(void) {
-  // Optimizaciones genéricas
-  std::ios_base::sync_with_stdio(false);
-  std::cin.tie(nullptr);
-  std::cout.tie(nullptr);
+tint f() {
+  // Calculo su matriz de transición
+  calcMatrix(N);
 
-  std::cin >> T;
-  forn(_r, T) {
-    // Recibo el input
-    std::cin >> N >> K >> R >> C;
+  // Preparo al vector inicial
+  V[0][0] = 1;
 
-    // Calculo su matriz de transición
-    calcMatrix(N);
+  // Simulo k pasos
+  forn(i, K)
+    step(V[i], V[i+1]);
 
-    // Preparo al vector inicial
-    V[_r][0][0] = 1;
-
-    // Simulo k pasos
-    forn(i, K)
-      step(V[_r][i], V[_r][i+1]);
-
-    // Obtengo el resultado
-    tint res = V[_r][K][0];
-
-    // Devuelvo el resultado
-    std::cout << res << std::endl;
-  }
+  // Obtengo el resultado
+  return V[K][0];
 }

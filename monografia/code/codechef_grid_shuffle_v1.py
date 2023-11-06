@@ -1,10 +1,4 @@
-# 0.08s
-
 MOD = 998_244_353
-
-def inputLine():
-  n, k, r, c = [int(x) for x in input().split()]
-  return n, k, r-1, c-1
 
 def inverseMod(x):
   return pow(x, -1, MOD)
@@ -43,8 +37,3 @@ def simulate(k, sz):
 def solve(k, r, c, sz):
   odds = simulate(k, sz)
   return odds[0] % MOD
-
-if __name__ == '__main__':
-  for _ in range(int(input())):
-    n, k, r, c = inputLine()
-    print(solve(k, r, c, n))

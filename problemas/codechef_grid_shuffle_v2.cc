@@ -69,6 +69,21 @@ void step(tint prev[4], tint curr[4]) {
     curr[i] = vprod(M[i], prev);
 }
 
+tint f(tint V[MAX_K+1][4]) {
+  // Calculo su matriz de transición
+  calcMatrix(N);
+
+  // Preparo al vector inicial
+  V[0][0] = 1;
+
+  // Simulo k pasos
+  forn(i, K)
+    step(V[i], V[i+1]);
+
+  // Obtengo el resultado
+  return V[K][0];
+}
+
 int main(void) {
   // Optimizaciones genéricas
   std::ios_base::sync_with_stdio(false);
@@ -80,18 +95,7 @@ int main(void) {
     // Recibo el input
     std::cin >> N >> K >> R >> C;
 
-    // Calculo su matriz de transición
-    calcMatrix(N);
-
-    // Preparo al vector inicial
-    V[_r][0][0] = 1;
-
-    // Simulo k pasos
-    forn(i, K)
-      step(V[_r][i], V[_r][i+1]);
-
-    // Obtengo el resultado
-    tint res = V[_r][K][0];
+    tint res = f(V[_r]);
 
     // Devuelvo el resultado
     std::cout << res << std::endl;
