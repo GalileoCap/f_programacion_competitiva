@@ -33,7 +33,7 @@ Y ahora, teniendo la probabilidad de que no haya ningún robot en cada casillero
 
 \paragraph{} Para probarla rápidamente la primera implementación la hice en \texttt{Python}.
 
-\lstinputlisting[language=Python]{cses_1726_moving_robots_v1.py}
+\lstinputlisting[language=Python]{cses_1726_moving_robots_v1.py_short}
 
 \paragraph{} Esa implementación claramente no es lo suficientemente eficiente, por lo que proseguí a implementarlo en \texttt{C++}.
 
@@ -41,14 +41,14 @@ En esta segunda implementación en lugar de armar la matriz de transición y mul
 
 Es importante resaltar que esta técnica devuelve el mismo resultado que el producto matricial ya que en efecto estoy haciendo lo mismo sólo que salteándome muchos productos por cero. Esta simplificación es muy útil en este estilo de ejercicios.
 
-\lstinputlisting{cses_1726_moving_robots_v2.cc}
+\lstinputlisting{cses_1726_moving_robots_v2.cc_short}
 
 \paragraph{} Esa implementación ya era suficientemente eficiente. Pero es interesante ver que \(1 \leq k \leq 100\) y ese es el único input, por lo que al haber pocos casos, se pueden precalcular .
 
 El siguiente script produce un vector de \texttt{C++} con los resultados ya calculados para \(0 \leq k \leq 100\) y luego el programa se simplifica (y optimiza) a sólo obtener el resultado pedido del vector.
 
-\lstinputlisting{cses_1726_moving_robots_cheat.py}
-\lstinputlisting{cses_1726_moving_robots_v3.cc}
+\lstinputlisting{cses_1726_moving_robots_cheat.py_short}
+\lstinputlisting{cses_1726_moving_robots_v3.cc_short}
 
 \subsection{\href{https://www.codechef.com/ICPCIN19/problems/SHUFGRID}{CodeChef - Grid Shuffle}}
 
@@ -184,12 +184,12 @@ Pero este no es el resultado pedido. Para conseguirlo, tendríamos que cambiar l
 
 \paragraph{} La primera implementación la hice en \texttt{Python}, esta vez no usando librerías para poder entregarlo.
 
-\lstinputlisting[language=Python]{codechef_grid_shuffle_v1.py}
+\lstinputlisting[language=Python]{codechef_grid_shuffle_v1.py_short}
 
 \paragraph{} Esa implementación \textbf{sí} pasaba en tiempo, pero igualmente se puede hacer más rápido en \texttt{C++}.
 
 Aunque la implementación se complica ya que es necesario implementar el obtener el inverso.
 
-\lstinputlisting{codechef_grid_shuffle_v2.cc}
+\lstinputlisting{codechef_grid_shuffle_v2.cc_short}
 
 \end{document}

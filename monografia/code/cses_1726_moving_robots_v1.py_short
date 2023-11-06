@@ -4,13 +4,13 @@ import itertools as itt
 def colPos(x, y, sz):
   return x + sz * y
 
-def genMatrix(sz):
+def genMatrix(sz): # Genera la matriz de transición para un tablero de lado sz
   mat = np.zeros((sz**2, sz**2))
 
   def getAmnt(x, y):
-    if x in [0, sz-1] and y in [0, sz-1]: # On a corner
+    if x in [0, sz-1] and y in [0, sz-1]: # En una esquina
       return 1/2
-    elif x in [0, sz-1] or y in [0, sz-1]: # On a side (not corner)
+    elif x in [0, sz-1] or y in [0, sz-1]: # En un costado (y no una esquina)
       return 1/3
     else: return 1/4
 
@@ -49,8 +49,3 @@ def solve(k, sz = 8):
     res += foo
 
   return res
-
-if __name__ == '__main__':
-  k = int(input())
-  res = solve(k, 8)
-  print(f'{res:.6f}')

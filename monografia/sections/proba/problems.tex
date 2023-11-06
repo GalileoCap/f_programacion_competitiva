@@ -46,12 +46,12 @@ Podemos calcular \(P(S_{n} = x)\) recursivamente llamando a la siguiente funció
 \subsubsection{Implementación}
 
 \paragraph{} La primera versión implementa directamente la función descrita previamente.
-\lstinputlisting{cses_1725_dice_probability_v1.cc}
+\lstinputlisting{cses_1725_dice_probability_v1.cc_short}
 
 \paragraph{} Esta implementación no es suficientemente eficiente ya que no llega a pasar en tiempo.
 
 Pero se puede notar que como usa recursión y hay superposición de subproblemas en las llamadas a \(f\) se puede utilizar programación dinámica.
-\lstinputlisting{cses_1725_dice_probability_v3.cc}
+\lstinputlisting{cses_1725_dice_probability_v3.cc_short}
 
 \subsection{\href{https://codeforces.com/group/YjFmW2O15Q/contest/101919}{TAP 2018 E, Estacionamiento}}
 
@@ -101,16 +101,16 @@ Agregando el caso base \(l < 0 \lor r \geq 2M\) para simplificar cuando se inten
 \subsubsection{Implementación}
 
 \paragraph{} La primera versión implementa directamente la función descrita previamente.
-\lstinputlisting{tap_2018_e_estacionamiento_v1.cc}
+\lstinputlisting{tap_2018_e_estacionamiento_v1.cc_short}
 
 \paragraph{} Esta implementación no es suficientemente eficiente por lo que no llega a pasar a tiempo.
 
 Pero se puede notar que como usa recursión y hay superposición de subproblemas en las llamadas a \(f\) se puede utilizar programación dinámica.
-\lstinputlisting{tap_2018_e_estacionamiento_v2.cc}
+\lstinputlisting{tap_2018_e_estacionamiento_v2.cc_short}
 
 \paragraph{} Esta segunda implementación todavía no es suficientemente eficiente, ya que el costo de calcular \(p(l, r)\) es muy costoso.
 
 Para optimizarla podemos utilizar tablas aditivas.
-\lstinputlisting{tap_2018_e_estacionamiento_v3.cc}
+\lstinputlisting{tap_2018_e_estacionamiento_v3.cc_short}
 
 \end{document}

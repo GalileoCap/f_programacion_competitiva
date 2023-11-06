@@ -1,20 +1,3 @@
-// 0.01s
-
-#include <ios>
-#include <iostream>
-#include <iomanip>
-#include <limits>
-
-using tint = long long;
-using tfloat = long double;
-
-#define forsn(i, s, n) for (tint i = s; i < tint(n); i++)
-#define forn(i, n) forsn(i, 0, n)
-#define fforsn(i, j, s, n) forsn(i, s, n) forsn(j, s, n)
-#define fforn(i, j, n) fforsn(i, j, 0, n)
-
-#define FIXED std::fixed << std::setprecision(6)
-
 #define MAX_K 100
 #define BSZ 8
 #define BSZZ (BSZ * BSZ)
@@ -82,20 +65,4 @@ tfloat f() {
     step(arr[i], arr[i+1]);
 
   return calcRes();
-}
-
-int main(void) {
-  // Optimizaciones genéricas
-  std::ios_base::sync_with_stdio(false);
-  std::cin.tie(nullptr);
-  std::cout.tie(nullptr);
-
-  // Recibo la cantidad de pasos a simular
-  std::cin >> K;
-
-  // Calculo el resultado
-  tfloat res = f();
-
-  // Devuelvo el resultado
-  std::cout << FIXED << res << std::endl;
 }

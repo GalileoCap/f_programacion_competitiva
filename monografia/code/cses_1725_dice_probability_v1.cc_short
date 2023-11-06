@@ -1,12 +1,4 @@
-// Time Limit Exceded
-
-#include <ios>
-#include <iostream>
-#include <iomanip>
-
-using tint = int;
-using tfloat = float;
-
+// ...
 tfloat f(tint j, tint x) { // f(j, x) = P(S_j = x)
   if (not (j <= x and x <= 6*j))
     return 0;
@@ -27,20 +19,4 @@ tfloat P(tint j, tint a, tint b) { // P(a <= S_j <= b)
     res += f(j, i);
   return res;
 }
-
-int main(void) {
-  // Optimizaciones genéricas
-  std::ios_base::sync_with_stdio(false);
-  std::cin.tie(nullptr);
-  std::cout.tie(nullptr);
-
-  // Recibo el input
-  tint n, a, b;
-  std::cin >> n >> a >> b;
-  
-  // Calculo el resultado como P(S = a) + P(S = a+1) + ... + P(S = b)
-  tfloat res = P(n, a, b);
-
-  // Devuelvo el resultado
-  std::cout << std::fixed << std::setprecision(6) << res << std::endl;
-}
+// ...
