@@ -7,12 +7,12 @@
 
 \paragraph{} Como mencioné antes, estuvimos viendo probabilidades discretas. En esta sección vamos a ver los detalles sobre probabilidades continuas.
 
-Supongamos que queremos realizar un control de calidad en una fábrica de baterías, medimos el tiempo de duración de baterías elegidas al azar definimos la VA.
+Supongamos que queremos realizar un control de calidad en una fábrica de baterías, medimos el tiempo de duración de baterías elegidas al azar y definimos la VA.
 \begin{center}
   \(X\): tiempo de duración de una batería
 \end{center}
 
-La VA. \(X\) es esencialmente continua ("tiempo"), siendo su rango el intervalo real \([0, \infty)\). Pero supongamos que medimos la duración de la batería en días, es decir "discretizamos" el rango de la VA. y su rango se convierte en \(N_{0}\). Por tratarse de una VA. discreta, su función de probabilidad puntual puede representarse mediante un histograma con área total igual a 1. Si me dimos la duración en horas, obtenemos un histograma con mayor número de intervalos de menor longitud cada uno, pero que sigue teniendo área total igual a 1.
+La VA. \(X\) es esencialmente continua (''tiempo''), siendo su rango el intervalo real \([0, \infty)\). Pero supongamos que medimos la duración de la batería en días, es decir ''discretizamos'' el rango de la VA. y su rango se convierte en \(\mathbb{N}_{0}\). Por tratarse de una VA. discreta, su función de probabilidad puntual puede representarse mediante un histograma con área total igual a 1. Si medimos la duración en horas, obtenemos un histograma con mayor número de intervalos de menor longitud cada uno, pero que sigue teniendo área total igual a 1.
 
 Si continuamos aumentando la precisión de la medición (minutos, segundos, décimas de segundos, etc.), obtenemos como límite de los histogramas una curva suave, y la probabilidad de que la duración de la batería se encuentre entre dos valores \(a\) y \(b\) (\(a < b\)) estará dada por el área bajo la curva entre \(a\) y \(b\).
 
@@ -66,6 +66,8 @@ Y entonces \(f(x) = g(x) \cdot I_{[a, b]}(x)\)
 
 \paragraph{} Se nota \(X \sim U(A, B)\), y describe una VA. que puede tomar cualquier valor en el intervalo \([A, B]\) con igual probabilidad.
 
+Esta es muy usada en programación, ya que con ella se pueden obtener todas las otras distribuciones.
+
 \begin{align*}
   f(x) &= \frac{1}{B-A}I_{[A, B]}(x) \\
   E(X) &= \frac{A+B}{2} \\
@@ -110,10 +112,10 @@ Y entonces \(f(x) = g(x) \cdot I_{[a, b]}(x)\)
   \caption{Diferentes distribuciones normales}
 \end{figure}
 
-\paragraph{} Su función de densidad es simétrica respecto de \(mu\), esto significa que:
-\begin{gather*}
-  f(\mu - x) = f(\mu + x) \forall x
-\end{gather*}
+\paragraph{} Su función de densidad es simétrica respecto de \(\mu\), esto significa que:
+\begin{align*}
+  f(\mu - x) &= f(\mu + x) & \forall x
+\end{align*}
 
 \subsubsection{Distribución Normal Standard}
 

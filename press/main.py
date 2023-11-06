@@ -1,15 +1,15 @@
 from random import randint
 import sys
 
-def getOccurrences(fpath):
+def getOccurrences(fpath, *, level = 1):
   totals = {}
   occurences = {}
     
   with open(fpath, 'r') as fin:
     for l in fin:
       parts = l.strip().split(sep = ' ')
-      for i in range(len(parts)-1):
-        prev, nxt = parts[i], parts[i+1]
+      for i in range(len(parts)-level):
+        prev, nxt = tuple(parts[i:i + level]), parts[i + level]
 
         foo = occurences.get(prev, {})
         foo[nxt] = foo.get(nxt, 0) + 1
@@ -35,6 +35,7 @@ def getSeed(totals):
       return word
 
 def chooseWord(totals, occurences, prev):
+  print(totals, prev)
   if prev in totals:
     r = randint(1, totals[prev])
     for word, occs in occurences[prev].items():
@@ -42,10 +43,10 @@ def chooseWord(totals, occurences, prev):
       if r <= 0:
         return word
 
-def createSentence(totals, occurences, start, maxLen = 50):
-  sentence = [start]
+def createSentence(totals, occurences,  seed, *, maxLen = 50, level = 1):
+  sentence = list(seed)
   for i in range(maxLen):
-    word = chooseWord(totals, occurences, sentence[-1])
+    word = chooseWord(totals, occurences, tuple(sentence[-level:]))
     if word is None:
       break
     sentence.append(word)
@@ -53,8 +54,9 @@ def createSentence(totals, occurences, start, maxLen = 50):
   return ' '.join(sentence)
 
 if __name__ == '__main__':
-  fpath = sys.argv[1] # Archivo de oraciones, una oración por linea.
+  level = int(sys.argv[1]) # Cantidad de palabras como semilla
+  fpath = sys.argv[2] # Archivo de oraciones, una oración por linea.
 
-  totals, occurences = getOccurrences(fpath)
+  totals, occurences = getOccurrences(fpath, level = level)
   # print(getOdds(totals, occurences))
-  print(createSentence(totals, occurences, getSeed(totals)))
+  print(createSentence(totals, occurences, getSeed(totals), level = level))

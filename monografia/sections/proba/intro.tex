@@ -6,19 +6,19 @@
 
 \paragraph{} Una de las intenciones principales de la ciencia es poder modelar, razonar, y explicar al mundo real. Con este objetivo, se desea poder hablar matemáticamente sobre eventos no necesariamente certeros.
 
-La teoría de Probabilidades comienza en los siglos XVI y XVII cuando Georlamo Cardano, Pierre de Fermat, y Blaise Pascal intentan analizar juegos de azar. Luego, durante los siguientes dos siglos varios matemáticos como Jacob Bernoulli y Abraham de Moivre la expandieron. Y en 1812 Pierre de Laplace introdujo la definición clásica de probabilidad.
+La teoría de Probabilidades comienza en los siglos XVI y XVII cuando Gerolamo Cardano, Pierre de Fermat, y Blaise Pascal intentan analizar juegos de azar. Luego, durante los siguientes dos siglos varios matemáticos como Jacob Bernoulli y Abraham de Moivre la expandieron. Y en 1812 Pierre de Laplace introdujo la definición clásica de probabilidad.
 
 Con estos inicios, la probabilidad originalmente sólo consideraba eventos discretos, y sus métodos eran más que nada combinatorios. Por ejemplo, para calcular la probabilidad de que tirando una moneda salga cara (\(H\)) calculamos la frecuencia de veces en las que sale entre todos los resultados posibles, que en este caso serían \(\{H, T\}\). Esto nos dejaría con que \(\frac{\abs{\{H\}}}{\abs{\{H, T\}}} = \frac{1}{2} = 0.5 = 50\%\) de las veces ocurre el evento ''sale cara''.
 
-De forma formal, para eventos discretos como es el de la moneda, se define la probabilidad \(P\) de que suceda un evento \(E\) en un espacio \(S\) de posibilidades como:
+Formalmente, para eventos discretos como es el de la moneda, se define la probabilidad \(P\) de que suceda un evento \(E\) en un espacio \(S\) de posibilidades como:
 \begin{gather*}
   P(E) = \frac{\abs{\{s \in S \text{ tal que ocurre } E \text{ en } s\}}}{\abs{S}}
 \end{gather*}
+
 Y al estar analizando frecuencias se tiene que \(0 \leq P(E) \leq 1\). Donde un 0 sería que el evento es imposible ya que no sucede en \(S\), un 1 sería que el evento siempre sucede, y un número en el medio implica que a veces sucede.
 
 Por ejemplo, tomando un dado de seis caras el resultado es un entero entre 1 y 6, el espacio \(S = \{1, 2, 3, 4, 5, 6\}\). Así que al tirar un dado tenemos que:
 \begin{itemize}
-  \item \(P(\text{''sale un 4''}) = \dfrac{\abs{\{4\}}}{\abs{\{1, 2, 3, 4, 5, 6\}}} = \frac{1}{6}\). Similar para cualquiera de las seis caras.
   \item \(P(\text{''sale un 4''}) = \dfrac{\abs{\{4\}}}{\abs{\{1, 2, 3, 4, 5, 6\}}} = \dfrac{1}{6}\). Similar para cualquiera de las seis caras.
   \item \(P(\text{''no sale un 6''}) = \dfrac{\abs{\{1, 2, 3, 4, 5\}}}{\abs{\{1, 2, 3, 4, 5, 6\}}} = \dfrac{5}{6}\). Similar para cualquiera de las seis caras.
 \item \(P(\text{''sale par''}) = \dfrac{\abs{\{2, 4, 6\}}}{\abs{\{1, 2, 3, 4, 5, 6\}}} = \dfrac{3}{6} = \dfrac{1}{2}\). Similar para que salga impar.
@@ -63,7 +63,7 @@ Por lo que la probabilidad del evento es:
     \begin{align*}
       P(A | B) = \dfrac{P(A \cap B)}{P(B)} && P(B) \neq 0
     \end{align*}
-    Que intuitivamente significa reducir el espacio \(S\) al sub-espacio \(S_{B} \subset S\) donde que sólo contiene los casos donde \(B\) sucede. \\
+    Que intuitivamente significa reducir el espacio \(S\) al sub-espacio \(S_{B} \subset S\) que sólo contiene los casos donde \(B\) sucede. \\
     Notar que no estaría bien definido en el caso que \(P(B) = 0\) ya que como no puede suceder \(B\) no puede suceder \(A\) dado \(B\).
 \end{itemize}
 
@@ -85,7 +85,7 @@ Cuando sucede que \(P(A|B) = P(A)\) y \(P(B|A) = P(B)\) se los define como event
 
 Dado que el valor de una v.a. es determinado por el resultado de un experimento, podemos asignarle probabilidades a los posibles valores de la variable.
 
-Como ejemplo, al arrojar dos veces un dado bien equilibrado. El espacio asociado es:
+Como ejemplo, al arrojar dos veces un dado equilibrado. El espacio asociado es:
 \begin{gather*}
   S = \{(x_{1}, x_{2}) / x_{i} \in \{1, 2, 3, 4, 5, 6\}\}
 \end{gather*}
@@ -125,7 +125,5 @@ Es importante resaltar la siguiente propiedad derivada de que seguimos hablando 
 \begin{align*}
   P(X \leq x) = \sum_{y \leq x, y \in \mathbb{R}_{X}}P(X = y) && \forall x \in \mathbb{R}
 \end{align*}
-
-\subsubsection{Distribuciones}
 
 \end{document}

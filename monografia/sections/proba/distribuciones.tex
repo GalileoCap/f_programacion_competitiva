@@ -10,7 +10,7 @@
 
 \paragraph{} Consiste de una sola prueba con dos resultados posibles, un Éxito (con valor 1) o un Fracaso (con valor 0).
 
-Ej: Tirar una moneda y considera cara como 0 y ceca como 1.
+Ej: Tirar una moneda y considera cara como éxito y ceca como fracaso.
 
 \begin{align*}
   P(X = 1) &= p \\
@@ -21,9 +21,9 @@ Ej: Tirar una moneda y considera cara como 0 y ceca como 1.
 
 \subsubsection{Distribución Binomial}
 
-\paragraph{} Se nota \(X \sim Bi(n, p)\), consiste de \(n\) pruebas de Bernoulli con probabilidad de éxito \(p\) independientes, y mide la probabilidad de que haya \(x\) éxitos entre las \(n\) pruebas.
+\paragraph{} Se nota \(X \sim Bi(n, p)\), consiste de \(n\) pruebas de Bernoulli independientes entre sí, y todas con probabilidad de éxito \(p\), y mide la probabilidad de que haya \(x\) éxitos entre las \(n\) pruebas.
 
-Ej: Tirar una moneda seis veces y sumar sus resultados. Se tendría \(X \sim Bi(6, 0.5)\)
+Ej: Tirar una moneda seis veces y sumar uno por cada éxito. Se tendría \(X \sim Bi(6, \frac{1}{2})\)
 
 \begin{align*}
   P(X = x) &= \binom{n}{x} \cdot p^{x} \cdot (1-p)^{n-x} & 0 \leq x \leq n \\
@@ -31,13 +31,13 @@ Ej: Tirar una moneda seis veces y sumar sus resultados. Se tendría \(X \sim Bi(
   V(X) &= np(1-p)
 \end{align*}
 
-La función de probabilidad puntual considera las \(\binom{n}{x}\) secuencias con \(x\) éxitos y \(n-x\) fracasos, que al ser independientes entre sí cada secuencia tiene probabilidad \(p^{x}(1-p)^{n-x}\).
+La función de probabilidad puntual considera las \(\binom{n}{x}\) secuencias con \(x\) éxitos y \(n-x\) fracasos, que al ser cada Bernoulli independiente con las otras cada secuencia tiene probabilidad \(p^{x}(1-p)^{n-x}\).
 
 \subsection{Distribución Geométrica}
 
 \paragraph{} Se nota \(X \sim G(p)\), consiste de repetir una prueba de Bernoulli con probabilidad de éxito \(p\) hasta conseguir el primer éxito, y mide la probabilidad de que se repita \(x\) veces y el \(x\)-ésimo intento sea el primer éxito.
 
-Ej: Tirar una moneda hasta que salga cara. Se tendría \(X \sim G(0.5)\)
+Ej: Tirar una moneda hasta que salga cara. Se tendría \(X \sim G(\frac{1}{2})\)
 
 \begin{align*}
   P(X = x) &= (1-p)^{x-1}p & 1 \leq x \\
@@ -51,7 +51,7 @@ La función de probabilidad puntual considera la única secuencia con \(x-1\) fr
 
 \paragraph{} Se nota \(X \sim BN(r, p)\), generaliza a la Geométrica ya que consiste de repetir una prueba de Bernoulli con probabilidad de éxito \(p\) hasta conseguir el \(r\)-ésimo éxito, y mide la probabilidad de que se repita \(x\) veces hasta que el \(x\)-ésimo intento sea el \(r\)-ésimo éxito.
 
-Ej: Tirar una moneda hasta que salga cara seis veces. Se tendría \(X \sim BN(6, 0.5)\)
+Ej: Tirar una moneda hasta que salga cara seis veces. Se tendría \(X \sim BN(6, \frac{1}{2})\)
 
 \begin{align*}
   P(X = x) &= \binom{x-1}{r-1}p^{r}(1-p)^{x-r} & r \leq x \\
